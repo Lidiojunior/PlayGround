@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>LicdekBank — Seu dinheiro, no seu ritmo</title>
+  <meta name="description" content="LicdekBank: conta digital completa, Pix instantâneo, cartão sem anuidade e investimentos que rendem." />
+  <meta name="theme-color" content="#0A3B2C" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- LOGIN -->
+  <section id="login" class="login" hidden>
+    <div class="login-art">
+      <div class="login-art-glow" aria-hidden="true"></div>
+      <div class="brand brand-light">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M9 7v15.5h11" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22.5" cy="9.5" r="2.6" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-name">licdek<span>bank</span></span>
+      </div>
+      <div class="login-copy">
+        <p class="eyebrow"><span class="dot"></span> Banco digital completo</p>
+        <h1>Seu dinheiro<br />no seu <em>ritmo</em>.</h1>
+        <p class="login-sub">Conta, Pix, cartão e investimentos em um só lugar. Sem tarifas escondidas, sem burocracia.</p>
+        <ul class="login-points">
+          <li><span class="tick">✓</span> Pix instantâneo 24h por dia</li>
+          <li><span class="tick">✓</span> Cartão sem anuidade e com cashback</li>
+          <li><span class="tick">✓</span> Seu dinheiro rendendo todo dia</li>
+        </ul>
+      </div>
+      <div class="login-card-scene" aria-hidden="true">
+        <div class="floating-card">
+          <div class="fc-top"><span class="fc-logo">licdek</span><span class="fc-chip"></span></div>
+          <div class="fc-number">5412 •••• •••• 2039</div>
+          <div class="fc-bottom"><span>LIDIO J. JUNIOR</span><span class="fc-brand">VISA</span></div>
+        </div>
+        <div class="float-pill">
+          <span class="float-icon">↓</span>
+          <div><strong>Pix recebido</strong><span>Ana Souza · + R$ 320,00</span></div>
+        </div>
+        <div class="float-badge">Rende <strong>102%</strong> do CDI</div>
+      </div>
+      <p class="login-legal">LicdekBank Instituição de Pagamento S.A. · Conta digital regulada pelo Banco Central.</p>
+    </div>
+
+    <div class="login-panel">
+      <div class="login-box">
+        <div class="brand brand-mobile">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M9 7v15.5h11" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22.5" cy="9.5" r="2.6" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-name">licdek<span>bank</span></span>
+        </div>
+        <div class="login-head">
+          <h2>Bem-vindo de volta</h2>
+          <p>Acesse sua conta para continuar.</p>
+        </div>
+        <form id="login-form" class="login-form" novalidate>
+          <label class="field">
+            <span class="field-label">CPF ou e-mail</span>
+            <span class="field-box">
+              <span class="field-ic" data-icon="user"></span>
+              <input id="login-user" name="user" type="text" value="lidio@licdek.com" autocomplete="username" spellcheck="false" required />
+            </span>
+          </label>
+          <label class="field">
+            <span class="field-label">Senha</span>
+            <span class="field-box">
+              <span class="field-ic" data-icon="lock"></span>
+              <input id="login-pass" name="password" type="password" value="licdek123" autocomplete="current-password" required minlength="4" />
+              <button type="button" class="field-eye" data-action="toggle-password" aria-label="Mostrar senha" data-icon="eye"></button>
+            </span>
+          </label>
+          <div class="login-row">
+            <label class="checkline"><input type="checkbox" checked /> Manter conectado</label>
+            <button type="button" class="linklike" data-action="forgot">Esqueci a senha</button>
+          </div>
+          <p class="form-error" id="login-error" role="alert" hidden>Informe uma senha com pelo menos 4 caracteres.</p>
+          <button type="submit" class="btn btn-primary btn-full">Entrar na conta</button>
+        </form>
+        <div class="divider"><span>ou</span></div>
+        <button type="button" class="btn btn-soft btn-full" data-action="demo-login">
+          <span data-icon="sparkles"></span> Abrir demonstração
+        </button>
+        <p class="login-hint">Ambiente de demonstração · seus dados são apenas locais.</p>
+        <div class="secure-note"><span data-icon="shield"></span> Conexão protegida com criptografia de ponta a ponta</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <div id="app" class="app" hidden>
+    <aside class="sidebar">
+      <a class="brand brand-sidebar" href="#" data-route="inicio" aria-label="LicdekBank, ir para o início">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M9 7v15.5h11" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22.5" cy="9.5" r="2.6" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-name">licdek<span>bank</span></span>
+      </a>
+
+      <nav class="side-nav" aria-label="Navegação principal">
+        <button class="nav-item" data-route="inicio" data-icon="home"><span>Início</span></button>
+        <button class="nav-item" data-route="pix" data-icon="pix"><span>Área Pix</span></button>
+        <button class="nav-item" data-route="pagar" data-icon="barcode"><span>Pagar</span></button>
+        <button class="nav-item" data-route="cartao" data-icon="card"><span>Cartão</span></button>
+        <button class="nav-item" data-route="investir" data-icon="trend"><span>Investimentos</span></button>
+        <button class="nav-item" data-route="extrato" data-icon="receipt"><span>Extrato</span></button>
+      </nav>
+
+      <div class="side-spacer"></div>
+
+      <div class="help-card">
+        <span class="help-ic" data-icon="headset"></span>
+        <strong>Precisa de ajuda?</strong>
+        <p>Nosso time responde em minutos, todos os dias.</p>
+        <button class="btn btn-lime btn-sm" data-action="help">Falar no chat</button>
+      </div>
+
+      <button class="side-user" data-route="perfil">
+        <span class="avatar avatar-sm">LJ</span>
+        <span class="side-user-txt"><strong>Lidio Junior</strong><span>Conta demo</span></span>
+        <span class="side-user-ic" data-icon="chevron-right"></span>
+      </button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <a class="brand brand-top" href="#" data-route="inicio" aria-label="LicdekBank">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M9 7v15.5h11" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22.5" cy="9.5" r="2.6" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-name">licdek<span>bank</span></span>
+        </a>
+        <div class="page-heading">
+          <h1 id="page-title">Início</h1>
+          <p id="page-sub">Terça-feira, 20 de outubro</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" data-action="open-search" aria-label="Buscar">
+            <span data-icon="search"></span>
+          </button>
+          <button class="icon-btn notif-btn" data-action="toggle-notifications" aria-label="Notificações">
+            <span data-icon="bell"></span>
+            <span class="notif-dot" id="notif-dot"></span>
+          </button>
+          <button class="avatar" data-route="perfil" aria-label="Abrir perfil">LJ</button>
+        </div>
+      </header>
+
+      <main id="view" class="view" tabindex="-1"></main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Navegação">
+      <button class="bn-item" data-route="inicio" data-icon="home"><span>Início</span></button>
+      <button class="bn-item" data-route="pix" data-icon="pix"><span>Pix</span></button>
+      <button class="bn-item bn-main" data-route="pagar" data-icon="plus" aria-label="Pagar"><span>Pagar</span></button>
+      <button class="bn-item" data-route="extrato" data-icon="receipt"><span>Extrato</span></button>
+      <button class="bn-item" data-route="perfil" data-icon="user"><span>Perfil</span></button>
+    </nav>
+  </div>
+
+  <div id="notif-panel" class="notif-panel" hidden>
+    <div class="notif-head">
+      <div><strong>Notificações</strong><span id="notif-count" class="notif-count">0 novas</span></div>
+      <button class="linklike" data-action="read-all">Marcar como lidas</button>
+    </div>
+    <div id="notif-list" class="notif-list"></div>
+    <div class="notif-foot"><button class="btn btn-soft btn-sm btn-full" data-action="notif-settings"><span data-icon="settings"></span> Preferências de notificação</button></div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <div id="search-layer" class="search-layer" hidden>
+    <div class="search-box">
+      <span data-icon="search"></span>
+      <input id="search-input" type="search" placeholder="Busque por transações, contatos ou atalhos..." autocomplete="off" />
+      <button class="icon-btn" data-action="close-search" aria-label="Fechar busca"><span data-icon="x"></span></button>
+    </div>
+    <div id="search-results" class="search-results"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "LicdekBank — Conta Digital",
+  "short_name": "LicdekBank",
+  "description": "Conta digital completa com Pix instantâneo, cartão sem anuidade e investimentos.",
+  "start_url": "./#inicio",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f5ef",
+  "theme_color": "#0A3B2C",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
