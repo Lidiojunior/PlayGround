@@ -1,0 +1,15 @@
+{
+  "name": "BLACKSITE — Campo de Tiro Tático",
+  "short_name": "BLACKSITE",
+  "description": "Simulação tática de tiro em primeira pessoa. 60 segundos, alvos hostis e precisão cirúrgica.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#050708",
+  "theme_color": "#050708",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

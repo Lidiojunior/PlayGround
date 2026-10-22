@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#06080a" />
+  <meta name="description" content="BLACKSITE — simulação tática de tiro em primeira pessoa. 60 segundos, alvos hostis e precisão cirúrgica." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>BLACKSITE — Campo de Tiro Tático</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="preload" href="assets/fonts/bc800.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/raj600.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="scene" aria-label="Campo de tiro tático em 3D"></canvas>
+
+    <div class="fx fx-vignette"></div>
+    <div class="fx fx-grain"></div>
+    <div class="fx fx-scan"></div>
+
+    <div id="loading">
+      <div class="load-mark"><span></span><span></span><span></span></div>
+      <p>PREPARANDO CAMPO DE TIRO</p>
+      <div class="load-bar"><i></i></div>
+    </div>
+
+    <section id="menu" class="screen menu">
+      <div class="menu-noise"></div>
+      <header class="menu-top">
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M20 2 37 11v18L20 38 3 29V11Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M20 9 30 14.5v11L20 31l-10-5.5v-11Z" fill="none" stroke="currentColor" stroke-width=".8" opacity=".55"/>
+            <path d="m20 14 3 6-3 6-3-6Z" fill="currentColor"/>
+          </svg>
+          <div class="brand-text"><b>BLACKSITE</b><span>TACTICAL TRAINING DIVISION</span></div>
+        </div>
+        <div class="sys">
+          <span class="sys-item"><i class="dot"></i> SISTEMA ONLINE</span>
+          <span class="sys-item">RANGE 07</span>
+          <span class="sys-item mono" id="menuClock">--:--:--</span>
+        </div>
+      </header>
+
+      <div class="menu-main">
+        <div class="hero">
+          <div class="kicker"><span class="rule"></span> SIMULAÇÃO TÁTICA · NÍVEL IV</div>
+          <h1 class="title">BLACK<span>SITE</span><i>//</i></h1>
+          <div class="subtitle"><span class="slash"></span> CAMPO DE TIRO CQB <em>OPERAÇÃO 07</em></div>
+          <p class="lead">Sessenta segundos. Dez corredores. Alvos hostis surgindo da escuridão.<br/>Respire. Alinhe. Execute. Cada disparo conta.</p>
+
+          <div class="cta-row">
+            <button id="startBtn" class="btn primary" aria-label="Start">
+              <span class="btn-index">01</span>
+              <span class="btn-label">INICIAR OPERAÇÃO</span>
+              <span class="btn-arrow">→</span>
+            </button>
+            <div class="record">
+              <span>RECORDE PESSOAL</span>
+              <b id="bestMenu">000000</b>
+            </div>
+          </div>
+
+          <ul class="hero-stats">
+            <li><b>60</b><span>SEGUNDOS</span></li>
+            <li><b>30</b><span>MUNIÇÃO</span></li>
+            <li><b>5</b><span>ALVOS ATIVOS</span></li>
+            <li><b>∞</b><span>PRESSÃO</span></li>
+          </ul>
+        </div>
+
+        <aside class="briefing">
+          <div class="brief-head"><span>BRIEFING</span><b>R-07 / CQB</b></div>
+          <div class="brief-items">
+            <div class="brief-item">
+              <span class="num">01</span>
+              <div><b>ENGAJE OS HOSTIS</b><p>Alvos emergem em toda a faixa. Neutralize o máximo possível antes do fim do tempo.</p></div>
+            </div>
+            <div class="brief-item">
+              <span class="num">02</span>
+              <div><b>MIRA NA CABEÇA</b><p>Impactos na zona superior valem 250 pontos. Precisão é a diferença entre operador e amador.</p></div>
+            </div>
+            <div class="brief-item">
+              <span class="num">03</span>
+              <div><b>MANTENHA A SEQUÊNCIA</b><p>Acertos consecutivos elevam o multiplicador. Um erro zera o combo.</p></div>
+            </div>
+          </div>
+          <div class="brief-controls">
+            <div><kbd>MOUSE</kbd><span>MIRAR</span></div>
+            <div><kbd>CLIQUE</kbd><span>ATIRAR</span></div>
+            <div><kbd>DIREITO</kbd><span>MIRA</span></div>
+            <div><kbd>R</kbd><span>RECARREGAR</span></div>
+            <div><kbd>WASD</kbd><span>MOVER</span></div>
+            <div><kbd>M</kbd><span>SOM</span></div>
+          </div>
+          <div class="brief-telemetry">
+            <div><span>CONDIÇÃO</span><b>NOITE / CQB</b></div>
+            <div><span>DISTÂNCIA</span><b>8—30 M</b></div>
+            <div><span>VENTO</span><b>0.4 M/S</b></div>
+          </div>
+          <div class="brief-foot"><span class="live-dot"></span> FEED AO VIVO <b>RANGE 07</b><i>TRL-04</i></div>
+        </aside>
+      </div>
+
+      <footer class="menu-foot">
+        <span>© 2026 BLACKSITE DYNAMICS</span>
+        <span class="mid">SIMULAÇÃO · AMBIENTE CONTROLADO · SEM CONTEÚDO REAL</span>
+        <span>BUILD 2.7.14 · WEBGL</span>
+      </footer>
+    </section>
+
+    <div id="hud" class="hidden">
+      <div class="hud-top">
+        <div class="hud-objective">
+          <div class="hud-brand"><span class="mark"></span> BLACKSITE <i>/</i> RANGE 07</div>
+          <div class="objective"><span class="obj-dot"></span> ELIMINE OS ALVOS HOSTIS <b>AO VIVO</b></div>
+        </div>
+        <div class="hud-timer" id="timerWrap">
+          <span class="hud-label">TEMPO RESTANTE</span>
+          <b class="clock mono" id="timer">01:00</b>
+          <div class="timer-bar"><i id="timerBar"></i></div>
+        </div>
+        <div class="hud-score">
+          <span class="hud-label">PONTUAÇÃO</span>
+          <b class="mono" id="score">000000</b>
+          <span class="hud-best">RECORDE <i id="bestHud">000000</i></span>
+        </div>
+      </div>
+
+      <div class="crosshair" id="crosshair" aria-hidden="true">
+        <span class="ch ch-t"></span><span class="ch ch-r"></span><span class="ch ch-b"></span><span class="ch ch-l"></span><span class="ch-dot"></span>
+      </div>
+      <div class="hitmarker" id="hitmarker" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+      <div class="feed" id="feed"></div>
+      <div class="score-layer" id="scoreLayer"></div>
+
+      <div class="hud-bottom">
+        <div class="hud-left">
+          <div class="hud-stat"><span>PRECISÃO</span><b class="mono" id="accuracy">100%</b></div>
+          <div class="hud-stat"><span>SEQUÊNCIA</span><b class="mono" id="streak">0 <em>x1.0</em></b></div>
+          <div class="hud-hint" id="reloadPrompt"><kbd>R</kbd> RECARREGAR</div>
+        </div>
+        <div class="hud-right">
+          <div class="weapon-meta">
+            <span>ARMA PRIMÁRIA</span>
+            <b>MK-7 CARBINE</b>
+            <i>5.56×45 MM · SEMI</i>
+          </div>
+          <div class="ammo"><b class="mono" id="ammo">30</b><span>/ ∞</span></div>
+          <div class="mags"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+        </div>
+      </div>
+
+      <div class="hud-actions">
+        <button id="muteBtn" class="icon-btn" aria-label="Alternar som" title="Som">SOM</button>
+        <button id="exitBtn" class="icon-btn" aria-label="Encerrar treino" title="Encerrar">SAIR</button>
+      </div>
+
+      <div class="mobile-controls" id="mobileControls">
+        <button id="adsBtn" class="m-btn" aria-label="Mira">MIRA</button>
+        <button id="reloadBtn" class="m-btn" aria-label="Recarregar">R</button>
+        <button id="fireBtn" class="m-fire" aria-label="Atirar"><span></span></button>
+      </div>
+    </div>
+
+    <section id="results" class="screen results hidden">
+      <div class="result-card">
+        <div class="result-top"><span>RELATÓRIO DE OPERAÇÃO</span><b>R-07 / CONFIDENCIAL</b></div>
+        <div class="result-head">
+          <div>
+            <div class="kicker"><span class="rule"></span> TREINO FINALIZADO</div>
+            <h2>OPERAÇÃO<br/><span>CONCLUÍDA</span></h2>
+          </div>
+          <div class="rank" id="rank">
+            <span class="rank-label">CLASSIFICAÇÃO</span>
+            <b id="rankLetter">A</b>
+            <i id="rankName">OPERADOR</i>
+          </div>
+        </div>
+        <div class="result-score">
+          <span>PONTUAÇÃO FINAL</span>
+          <b class="mono" id="finalScore">000000</b>
+          <i id="newBest">NOVO RECORDE PESSOAL</i>
+        </div>
+        <div class="result-grid">
+          <div><span>ALVOS ABATIDOS</span><b class="mono" id="finalKills">0</b></div>
+          <div><span>TIROS NA CABEÇA</span><b class="mono" id="finalHeads">0</b></div>
+          <div><span>PRECISÃO</span><b class="mono" id="finalAccuracy">0%</b></div>
+          <div><span>MELHOR SEQUÊNCIA</span><b class="mono" id="finalStreak">0</b></div>
+          <div><span>DISPAROS</span><b class="mono" id="finalShots">0</b></div>
+          <div><span>TEMPO EM CAMPO</span><b class="mono" id="finalTime">60s</b></div>
+        </div>
+        <div class="result-actions">
+          <button id="replayBtn" class="btn primary" aria-label="Play again"><span class="btn-index">01</span><span class="btn-label">JOGAR NOVAMENTE</span><span class="btn-arrow">→</span></button>
+          <button id="menuBtn" class="btn ghost"><span class="btn-label">VOLTAR AO MENU</span></button>
+        </div>
+        <div class="result-foot"><span class="live-dot"></span> DESEMPENHO REGISTRADO · <i id="resultStamp"></i></div>
+      </div>
+    </section>
+  </div>
+
+  <noscript><div class="noscript">Ative o JavaScript para iniciar a simulação.</div></noscript>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
