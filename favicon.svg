@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lidiol Mojo FM">
+  <defs>
+    <radialGradient id="bgGlow" cx="28%" cy="20%" r="85%">
+      <stop offset="0" stop-color="#3a1a4d"/>
+      <stop offset="55%" stop-color="#160f22"/>
+      <stop offset="100%" stop-color="#08080e"/>
+    </radialGradient>
+    <linearGradient id="label" x1="20" y1="20" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd04a"/>
+      <stop offset="0.42" stop-color="#ff7a3d"/>
+      <stop offset="0.74" stop-color="#ff3d81"/>
+      <stop offset="1" stop-color="#8a5cff"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd04a"/>
+      <stop offset="0.5" stop-color="#ff3d81"/>
+      <stop offset="1" stop-color="#8a5cff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bgGlow)"/>
+  <circle cx="32" cy="32" r="23" fill="#120e19"/>
+  <circle cx="32" cy="32" r="22.4" fill="none" stroke="url(#rim)" stroke-width="1.6" opacity="0.9"/>
+  <g fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1">
+    <circle cx="32" cy="32" r="20"/>
+    <circle cx="32" cy="32" r="17.4"/>
+    <circle cx="32" cy="32" r="14.8"/>
+    <circle cx="32" cy="32" r="12.2"/>
+  </g>
+  <circle cx="32" cy="32" r="9.2" fill="url(#label)"/>
+  <path d="M29.6 27.9v8.2l6.9-4.1z" fill="#1a0f12"/>
+  <circle cx="32" cy="32" r="22.4" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.18"/>
+  <path d="M50.5 12.6c.5 2.6 1 3.1 3.6 3.6-2.6.5-3.1 1-3.6 3.6-.5-2.6-1-3.1-3.6-3.6 2.6-.5 3.1-1 3.6-3.6Z" fill="#ffd04a"/>
+  <path d="M13 47.4c.3 1.7.7 2.1 2.4 2.4-1.7.3-2.1.7-2.4 2.4-.3-1.7-.7-2.1-2.4-2.4 1.7-.3 2.1-.7 2.4-2.4Z" fill="#ff7a3d"/>
+</svg>

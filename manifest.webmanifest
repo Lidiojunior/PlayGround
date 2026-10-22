@@ -1,0 +1,58 @@
+{
+  "id": "./",
+  "name": "Lidiol Mojo FM — Rádio brasileira ao vivo",
+  "short_name": "Mojo FM",
+  "description": "Rádio brasileira ao vivo com pop, rock, sertanejo, MPB, notícias, gospel e flashback. Sintonize o Brasil de graça.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#08080e",
+  "theme_color": "#08080e",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Explorar estações",
+      "short_name": "Estações",
+      "description": "Ver todas as estações ao vivo",
+      "url": "./#estacoes",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Favoritas",
+      "short_name": "Favoritas",
+      "description": "Ouvir suas estações favoritas",
+      "url": "./#estacoes",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
