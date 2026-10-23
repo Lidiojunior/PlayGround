@@ -1,0 +1,20 @@
+{
+  "name": "LotoLab — Lotofácil",
+  "short_name": "LotoLab",
+  "description": "Misture dezenas, gere jogos equilibrados de 15 números e confira seus acertos na Lotofácil.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0612",
+  "theme_color": "#0a0612",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

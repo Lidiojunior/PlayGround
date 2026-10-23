@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LotoLab — Gerador e conferidor da Lotofácil</title>
+  <meta name="description" content="Misture dezenas, gere jogos equilibrados de 15 números e confira seus acertos na Lotofácil.">
+  <meta name="theme-color" content="#0a0612">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="backdrop" aria-hidden="true">
+    <span class="glow glow-a"></span>
+    <span class="glow glow-b"></span>
+    <span class="glow glow-c"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#gerar" aria-label="LotoLab, ir para o gerador">
+      <img src="icon.svg" alt="" width="46" height="46">
+      <span class="brand-text">
+        <strong>LotoLab</strong>
+        <small>Lotofácil, com método.</small>
+      </span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Seções do aplicativo">
+      <button class="tab is-active" id="tabbtn-gerar" role="tab" aria-selected="true" aria-controls="tab-gerar" data-tab="gerar">Gerar</button>
+      <button class="tab" id="tabbtn-conferir" role="tab" aria-selected="false" aria-controls="tab-conferir" data-tab="conferir">Conferir</button>
+      <button class="tab" id="tabbtn-historico" role="tab" aria-selected="false" aria-controls="tab-historico" data-tab="historico">Histórico</button>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="panel is-active" id="tab-gerar" role="tabpanel" aria-labelledby="tabbtn-gerar">
+      <div class="intro">
+        <span class="eyebrow">25 dezenas · 15 por jogo</span>
+        <h1>Misture, equilibre e teste seus jogos.</h1>
+        <p>Escolha de 15 a 25 dezenas como base — ou deixe as 25 — e gere jogos com pares, ímpares, primos, moldura e soma bem distribuídos. Depois, confira os acertos contra qualquer resultado.</p>
+        <div class="intro-chips" aria-hidden="true">
+          <span>Mistura inteligente</span>
+          <span>Filtros de equilíbrio</span>
+          <span>Conferência automática</span>
+        </div>
+      </div>
+
+      <div class="grid-layout">
+        <section class="card picker-card">
+          <div class="card-head">
+            <div>
+              <h2>1. Dezenas base</h2>
+              <p id="pool-hint">Selecione de 15 a 25 dezenas ou use as 25.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" id="surprise" type="button">Misturar 15</button>
+              <button class="btn btn-ghost" id="clear-pool" type="button">Limpar</button>
+            </div>
+          </div>
+
+          <div id="number-grid" class="number-grid" aria-label="Dezenas base"></div>
+
+          <div class="selection-strip">
+            <div class="count">
+              <strong id="pool-count">0</strong>
+              <span>de 25 selecionadas</span>
+              <span class="chip" id="pool-badge">Base: todas as 25</span>
+            </div>
+            <p id="pool-note">Sem seleção, a mistura usa todas as 25 dezenas.</p>
+          </div>
+
+          <details class="filters" open>
+            <summary>
+              <span>Filtros de equilíbrio</span>
+              <span class="chip chip-muted" id="filters-badge">7 ativos</span>
+            </summary>
+            <div class="filter-grid">
+              <label class="check">
+                <input type="checkbox" id="f-even" checked>
+                <span><strong>Par e ímpar</strong><small>6 a 9 dezenas pares</small></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="f-sum" checked>
+                <span><strong>Soma das dezenas</strong><small>Entre 160 e 230</small></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="f-primes" checked>
+                <span><strong>Números primos</strong><small>4 a 7 primos no jogo</small></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="f-border" checked>
+                <span><strong>Moldura e centro</strong><small>7 a 11 na moldura</small></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="f-run" checked>
+                <span><strong>Sequências curtas</strong><small>No máximo 4 seguidos</small></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="f-repeat" checked>
+                <span><strong>Repetir do último</strong><small>7 a 11 dezenas do último resultado</small></span>
+              </label>
+              <label class="check">
+                <input type="checkbox" id="f-balance" checked>
+                <span><strong>Espalhar entre jogos</strong><small>Evita concentrar sempre nas mesmas dezenas</small></span>
+              </label>
+              <div class="field trend-field">
+                <label for="trend">Tendência do histórico</label>
+                <select id="trend">
+                  <option value="off">Sem viés estatístico</option>
+                  <option value="hot">Priorizar dezenas quentes</option>
+                  <option value="cold">Priorizar dezenas frias</option>
+                </select>
+              </div>
+            </div>
+          </details>
+
+          <div class="generate-row">
+            <div class="stepper">
+              <label for="quantity">Quantidade de jogos</label>
+              <div class="stepper-control">
+                <button type="button" data-step="-1" aria-label="Diminuir quantidade">−</button>
+                <input id="quantity" type="number" min="1" max="30" value="10" inputmode="numeric">
+                <button type="button" data-step="1" aria-label="Aumentar quantidade">+</button>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-generate" id="generate" type="button">
+              <span>Gerar jogos</span>
+              <small>15 dezenas cada</small>
+            </button>
+          </div>
+          <p class="fineprint">Os filtros organizam a mistura, mas não aumentam a chance de acerto. Toda combinação de 15 dezenas tem a mesma probabilidade.</p>
+        </section>
+
+        <section class="card results-card">
+          <div class="card-head">
+            <div>
+              <h2>2. Seus jogos</h2>
+              <p id="results-sub">Nenhum jogo gerado ainda.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" id="copy-all" type="button" disabled>Copiar</button>
+              <button class="btn btn-ghost" id="save-all" type="button" disabled>Salvar todos</button>
+            </div>
+          </div>
+          <div id="results" class="results" aria-live="polite"></div>
+          <div id="results-empty" class="empty-state">
+            <span class="empty-icon" aria-hidden="true">15</span>
+            <h3>Pronto para misturar?</h3>
+            <p>Defina a base e os filtros, escolha quantos jogos quer e toque em <strong>Gerar jogos</strong>.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="tab-conferir" role="tabpanel" aria-labelledby="tabbtn-conferir" hidden>
+      <div class="intro compact">
+        <span class="eyebrow">Conferência</span>
+        <h1>Confira seus acertos.</h1>
+        <p>Informe as 15 dezenas sorteadas e veja quantos acertos fez cada jogo salvo, com as faixas de premiação da Lotofácil.</p>
+      </div>
+
+      <div class="grid-layout">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Resultado sorteado</h2>
+              <p>Selecione exatamente 15 dezenas.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" id="use-last" type="button">Usar último</button>
+              <button class="btn btn-ghost" id="clear-draw" type="button">Limpar</button>
+            </div>
+          </div>
+          <div id="draw-grid" class="number-grid draw-grid" aria-label="Dezenas sorteadas"></div>
+          <div class="selection-strip">
+            <div class="count">
+              <strong id="draw-count">0</strong>
+              <span>de 15 selecionadas</span>
+            </div>
+            <button class="btn btn-primary" id="check-games" type="button" disabled>Conferir meus jogos</button>
+          </div>
+          <div class="paste-row">
+            <label for="draw-text">Ou cole as dezenas sorteadas</label>
+            <div class="paste-control">
+              <input id="draw-text" type="text" inputmode="numeric" placeholder="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15" autocomplete="off">
+              <button class="btn btn-ghost" id="apply-draw" type="button">Aplicar</button>
+            </div>
+            <p class="form-error" id="draw-error" role="alert"></p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Meus jogos salvos</h2>
+              <p id="saved-sub">0 jogos salvos</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost btn-danger" id="clear-saved" type="button">Apagar todos</button>
+            </div>
+          </div>
+          <div id="check-summary" class="summary" hidden></div>
+          <div id="saved-games" class="saved-games"></div>
+          <div id="saved-empty" class="empty-state">
+            <span class="empty-icon" aria-hidden="true">★</span>
+            <h3>Nenhum jogo salvo</h3>
+            <p>Gere seus jogos e toque em <strong>Salvar</strong> ou <strong>Salvar todos</strong> para conferir depois.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="card odds-card">
+        <div class="card-head">
+          <div>
+            <h2>Probabilidades de uma aposta de 15 dezenas</h2>
+            <p>Chance exata por faixa de premiação.</p>
+          </div>
+        </div>
+        <div id="odds" class="odds-grid"></div>
+        <div class="odds-foot">
+          <span class="chip chip-accent">Prêmio a partir de 11 acertos</span>
+          <strong id="any-prize"></strong>
+          <span>Jogue com responsabilidade. +18.</span>
+        </div>
+      </section>
+
+      <section class="card simulator-card">
+        <div class="card-head">
+          <div>
+            <h2>Teste de simulação</h2>
+            <p>Roda sorteios aleatórios para mostrar como os acertos se distribuem. Usa o resultado selecionado acima ou um jogo aleatório.</p>
+          </div>
+          <button class="btn btn-ghost" id="simulate" type="button">Simular 100 mil sorteios</button>
+        </div>
+        <div id="sim-result" class="sim-result">
+          <p class="sim-placeholder">A simulação é uma demonstração estatística. Cada sorteio é independente e o passado não garante resultados.</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel" id="tab-historico" role="tabpanel" aria-labelledby="tabbtn-historico" hidden>
+      <div class="intro compact">
+        <span class="eyebrow">Histórico</span>
+        <h1>Seus concursos, seus padrões.</h1>
+        <p>Adicione resultados oficiais para acompanhar a frequência das dezenas. O último concurso cadastrado alimenta o filtro de repetição do gerador.</p>
+      </div>
+
+      <section class="card history-form-card">
+        <div class="card-head">
+          <div>
+            <h2>Adicionar resultado</h2>
+            <p>Informe o concurso (opcional) e as 15 dezenas sorteadas.</p>
+          </div>
+        </div>
+        <form id="history-form" class="history-form" novalidate>
+          <div class="field">
+            <label for="contest">Concurso</label>
+            <input id="contest" type="text" inputmode="numeric" placeholder="Ex.: 3200" autocomplete="off">
+          </div>
+          <div class="field field-grow">
+            <label for="history-numbers">Dezenas sorteadas</label>
+            <input id="history-numbers" type="text" inputmode="numeric" placeholder="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15" autocomplete="off" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Adicionar resultado</button>
+        </form>
+        <p class="form-error" id="history-error" role="alert"></p>
+      </section>
+
+      <div class="grid-layout history-layout">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Frequência das dezenas</h2>
+              <p id="frequency-sub">Sem histórico cadastrado.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost btn-danger" id="clear-history" type="button">Limpar histórico</button>
+            </div>
+          </div>
+          <div id="frequency-grid" class="frequency-grid"></div>
+          <div class="frequency-foot">
+            <div class="frequency-lists">
+              <div>
+                <span class="mini-label">Mais sorteadas</span>
+                <div id="hot-list" class="mini-balls"></div>
+              </div>
+              <div>
+                <span class="mini-label">Menos sorteadas</span>
+                <div id="cold-list" class="mini-balls"></div>
+              </div>
+            </div>
+            <p class="fineprint">Frequência passada não altera a probabilidade futura. O histórico serve para organizar e diversificar seus jogos.</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Concursos cadastrados</h2>
+              <p id="history-sub">Nenhum resultado.</p>
+            </div>
+          </div>
+          <div id="history-list" class="history-list"></div>
+          <div id="history-empty" class="empty-state">
+            <span class="empty-icon" aria-hidden="true">◎</span>
+            <h3>Comece pelo último concurso</h3>
+            <p>Cadastre um resultado para liberar o filtro de repetição e a análise de frequência.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>LotoLab</strong>
+      <span>Ferramenta independente de mistura e conferência de jogos.</span>
+    </div>
+    <p>Sem vínculo com a Caixa Econômica Federal. Não vendemos apostas. Jogue com responsabilidade. +18.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">Este app precisa de JavaScript ativado para gerar e conferir jogos.</p></noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
