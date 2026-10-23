@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio Mojó 180.9 FM - Tocando Todos os Ritmos</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237c3aed'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23eab308' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23ec4899'/%3E%3C/svg%3E">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter e Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mojo: {
+                            purple: '#7c3aed',
+                            pink: '#ec4899',
+                            blue: '#06b6d4',
+                            orange: '#f97316',
+                            gold: '#eab308',
+                            dark: '#0b0f19',
+                            card: 'rgba(23, 27, 44, 0.75)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        digital: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Background & Glassmorphic Utilities */
+        body {
+            background-color: #07090e;
+            background-image:
+                radial-gradient(at 10% 10%, rgba(124, 58, 237, 0.25) 0px, transparent 50%),
+                radial-gradient(at 90% 20%, rgba(236, 72, 153, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 80%, rgba(6, 182, 212, 0.2) 0px, transparent 50%),
+                radial-gradient(at 80% 90%, rgba(249, 115, 22, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(18, 22, 36, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(124, 58, 237, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.3);
+        }
+
+        .neon-glow-purple {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
+        }
+
+        .neon-glow-pink {
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.5);
+        }
+
+        .neon-text-gold {
+            text-shadow: 0 0 10px rgba(234, 179, 8, 0.6);
+        }
+
+        /* Equalizer Animation */
+        .eq-bar {
+            width: 4px;
+            background: linear-gradient(to top, #ec4899, #7c3aed, #06b6d4);
+            border-radius: 4px;
+            height: 10px;
+            transition: height 0.1s ease;
+        }
+
+        .playing .eq-bar:nth-child(1) { animation: equalize 1.2s infinite ease-in-out; }
+        .playing .eq-bar:nth-child(2) { animation: equalize 0.8s infinite ease-in-out; animation-delay: -0.2s; }
+        .playing .eq-bar:nth-child(3) { animation: equalize 1.4s infinite ease-in-out; animation-delay: -0.4s; }
+        .playing .eq-bar:nth-child(4) { animation: equalize 1.0s infinite ease-in-out; animation-delay: -0.6s; }
+        .playing .eq-bar:nth-child(5) { animation: equalize 0.9s infinite ease-in-out; animation-delay: -0.8s; }
+        .playing .eq-bar:nth-child(6) { animation: equalize 1.3s infinite ease-in-out; animation-delay: -0.3s; }
+        .playing .eq-bar:nth-child(7) { animation: equalize 0.7s infinite ease-in-out; animation-delay: -0.5s; }
+
+        @keyframes equalize {
+            0%, 100% { height: 8px; }
+            50% { height: 42px; }
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.4; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .live-pulse {
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.5);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 58, 237, 0.8);
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.35s ease-out;
+        }
+
+        #volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 9999px;
+            background: linear-gradient(to right, #ec4899 80%, rgba(255,255,255,0.2) 80%);
+            outline: none;
+        }
+        #volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
+            cursor: pointer;
+        }
+        #volume-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border: none;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
+            cursor: pointer;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mojo-pink selection:text-white pb-10">
+
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+
+            <!-- Logo & Station Name -->
+            <div class="flex items-center gap-3">
+                <div class="relative flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-mojo-purple via-mojo-pink to-mojo-orange p-0.5 shadow-lg shadow-mojo-purple/30">
+                    <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid fa-radio text-2xl text-mojo-gold" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-black text-xl md:text-2xl tracking-wider text-white font-digital">
+                            RÁDIO MOJÓ
+                        </h1>
+                        <span class="bg-gradient-to-r from-mojo-orange to-mojo-gold text-slate-950 font-extrabold text-xs px-2 py-0.5 rounded-full font-digital shadow-md">
+                            180.9 FM
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-400 font-medium tracking-wide flex items-center gap-1">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-mojo-gold"></span>
+                        Tocando Todos os Ritmos
+                    </p>
+                </div>
+            </div>
+
+            <!-- Live Status & Stats Bar -->
+            <div class="flex items-center gap-4 md:gap-6 w-full sm:w-auto justify-between sm:justify-end">
+
+                <!-- Live Indicator -->
+                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-3 py-1.5 rounded-full">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                    </span>
+                    <span class="text-xs font-bold text-red-400 uppercase tracking-widest font-digital">AO VIVO</span>
+                </div>
+
+                <!-- Online Listeners Counter -->
+                <div class="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-xs text-gray-300">
+                    <i class="fa-solid fa-users text-mojo-blue" aria-hidden="true"></i>
+                    <span id="listener-count" class="font-bold text-white font-digital">1.809</span>
+                    <span class="text-gray-400">ouvintes</span>
+                </div>
+
+                <!-- Digital Clock -->
+                <div class="hidden md:flex flex-col items-end">
+                    <span id="digital-clock" class="font-digital text-lg font-bold text-mojo-blue tracking-wider">00:00:00</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">SÃO LUÍS - MA</span>
+                </div>
+
+                <!-- Like Button -->
+                <button id="like-btn" onclick="toggleLike()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-1.5 rounded-full transition text-xs font-semibold text-gray-200" aria-label="Curtir a rádio">
+                    <i id="like-icon" class="fa-regular fa-heart text-mojo-pink text-sm transition-transform duration-300"></i>
+                    <span id="like-count">18.9K</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 w-full flex-grow">
+
+        <!-- SECTION 1: HERO PLAYER BANNER -->
+        <div class="glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden mb-8 border border-white/10">
+            <!-- Background Glow FX -->
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-mojo-purple/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-mojo-pink/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+
+                <!-- Album Cover & Visualizer -->
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <div class="relative group">
+                        <!-- Disc / Artwork Wrapper -->
+                        <div id="artwork-container" class="w-64 h-64 sm:w-72 sm:h-72 rounded-2xl overflow-hidden shadow-2xl relative border-2 border-white/10 transition-transform duration-500 group-hover:scale-[1.02]">
+                            <img id="track-cover" src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop" alt="Capa da Música" class="w-full h-full object-cover">
+
+                            <!-- Overlay Gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+
+                            <!-- Frequency Badge -->
+                            <div class="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 text-xs font-bold font-digital text-mojo-gold flex items-center gap-1.5">
+                                <i class="fa-solid fa-tower-broadcast text-mojo-orange animate-pulse" aria-hidden="true"></i>
+                                180.9 MHz
+                            </div>
+
+                            <!-- Genre Tag Badge -->
+                            <div id="track-genre-badge" class="absolute top-3 right-3 bg-mojo-purple/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20 text-[11px] font-bold uppercase tracking-wider text-white">
+                                SERTANEJO
+                            </div>
+
+                            <!-- Floating Equalizer on Cover -->
+                            <div id="eq-container" class="absolute bottom-4 left-0 right-0 flex justify-center items-end gap-1.5 h-12 px-4">
+                                <div class="eq-bar"></div>
+                                <div class="eq-bar"></div>
+                                <div class="eq-bar"></div>
+                                <div class="eq-bar"></div>
+                                <div class="eq-bar"></div>
+                                <div class="eq-bar"></div>
+                                <div class="eq-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player Details & Controls -->
+                <div class="lg:col-span-7 flex flex-col justify-center text-center lg:text-left">
+
+                    <!-- Slogan & Frequency Display -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-2">
+                        <span class="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-mojo-blue font-digital">
+                            <span class="w-1.5 h-1.5 rounded-full bg-mojo-blue shrink-0"></span>
+                            O Som que Movimenta São Luís e o Mundo
+                        </span>
+                    </div>
+
+                    <!-- Song Title & Artist -->
+                    <h2 id="track-title" class="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight mb-2">
+                        Modão de Boteco (Sertanejo Universitário)
+                    </h2>
+                    <p id="track-artist" class="text-lg text-gray-300 font-medium mb-6">
+                        Dupla Serrana &amp; Rádio Mojó
+                    </p>
+
+                    <!-- Progress Bar (Simulated Broadcast Stream) -->
+                    <div class="w-full mb-6">
+                        <div class="flex justify-between text-xs text-gray-400 font-digital mb-1.5">
+                            <span id="current-time">00:00</span>
+                            <span class="flex items-center gap-1 text-mojo-gold">
+                                <i class="fa-solid fa-signal text-[10px]" aria-hidden="true"></i> TRANSMISSÃO HD
+                            </span>
+                            <span id="total-time">03:27</span>
+                        </div>
+                        <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden cursor-pointer relative" id="progress-bar-container" role="slider" aria-label="Progresso da música" aria-valuemin="0" aria-valuemax="207" aria-valuenow="0" tabindex="0">
+                            <div id="progress-bar" class="bg-gradient-to-r from-mojo-purple via-mojo-pink to-mojo-orange h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Main Audio Controls -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+
+                        <!-- Play/Pause Button Group -->
+                        <div class="flex items-center gap-4">
+                            <!-- Prev Song -->
+                            <button onclick="prevTrack()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-gray-200 hover:text-white transition" aria-label="Música anterior">
+                                <i class="fa-solid fa-backward-step"></i>
+                            </button>
+
+                            <!-- Big Play/Pause -->
+                            <button id="play-btn" onclick="togglePlay()" class="relative group w-16 h-16 rounded-full bg-gradient-to-tr from-mojo-purple via-mojo-pink to-mojo-orange flex items-center justify-center text-white text-2xl shadow-xl shadow-mojo-pink/30 hover:scale-105 transition duration-300" aria-label="Reproduzir">
+                                <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-mojo-purple to-mojo-orange opacity-70 blur group-hover:opacity-100 transition duration-300"></div>
+                                <i id="play-icon" class="fa-solid fa-play relative z-10 ml-1"></i>
+                            </button>
+
+                            <!-- Next Song -->
+                            <button onclick="nextTrack()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-gray-200 hover:text-white transition" aria-label="Próxima música">
+                                <i class="fa-solid fa-forward-step"></i>
+                            </button>
+                        </div>
+
+                        <!-- Volume Controls -->
+                        <div class="flex items-center gap-3 bg-white/5 px-4 py-2.5 rounded-2xl border border-white/10 w-full sm:w-auto justify-center">
+                            <button id="mute-btn" onclick="toggleMute()" class="text-gray-400 hover:text-white transition" aria-label="Silenciar">
+                                <i id="volume-icon" class="fa-solid fa-volume-high"></i>
+                            </button>
+                            <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.8" oninput="changeVolume(this.value)" class="w-24 sm:w-28 cursor-pointer" aria-label="Volume">
+                        </div>
+
+                        <!-- Share & Favorite -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="shareRadio()" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-gray-300 hover:text-mojo-blue transition" title="Compartilhar Rádio" aria-label="Compartilhar Rádio">
+                                <i class="fa-solid fa-share-nodes"></i>
+                            </button>
+                            <button onclick="showToast('Rádio Mojó 180.9 FM adicionada aos favoritos!')" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-gray-300 hover:text-mojo-gold transition" title="Favoritar" aria-label="Favoritar">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECTION 2: GRID DE RITMOS / PROGRAMAÇÃO -->
+        <section class="mb-10">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-mojo-pink" aria-hidden="true"></i> SELETOR DE RITMOS &amp; PROGRAMAÇÃO
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-400">Escolha o seu estilo musical favorito para ouvir agora na Rádio Mojó</p>
+                </div>
+            </div>
+
+            <!-- Program Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5" id="genre-grid">
+                <!-- Cards will be populated dynamically by JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: INTERATIVIDADE (PEDIR MÚSICA & CHAT AO VIVO) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- FORMULÁRIO DE PEDIDO DE MÚSICA -->
+            <div class="lg:col-span-5 glass-panel rounded-3xl p-6 border border-white/10 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-mojo-orange/20 border border-mojo-orange/30 flex items-center justify-center text-mojo-orange">
+                            <i class="fa-solid fa-paper-plane text-lg" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Pedir Sua Música</h3>
+                            <p class="text-xs text-gray-400">Mande seu recado para o locutor da Mojó</p>
+                        </div>
+                    </div>
+
+                    <form id="request-form" onsubmit="submitMusicRequest(event)" class="space-y-4">
+                        <div>
+                            <label for="req-name" class="block text-xs font-semibold text-gray-300 mb-1">Seu Nome / Apelido</label>
+                            <input type="text" id="req-name" required maxlength="40" placeholder="Ex: Carlos Silva" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mojo-pink transition">
+                        </div>
+
+                        <div>
+                            <label for="req-city" class="block text-xs font-semibold text-gray-300 mb-1">Sua Cidade / Bairro</label>
+                            <input type="text" id="req-city" required maxlength="50" placeholder="Ex: São Luís - MA" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mojo-pink transition">
+                        </div>
+
+                        <div>
+                            <label for="req-song" class="block text-xs font-semibold text-gray-300 mb-1">Nome da Música &amp; Artista</label>
+                            <input type="text" id="req-song" required maxlength="80" placeholder="Ex: Henrique &amp; Juliano - Deixa Ele Sofrer" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mojo-pink transition">
+                        </div>
+
+                        <div>
+                            <label for="req-msg" class="block text-xs font-semibold text-gray-300 mb-1">Mensagem ou Alô (Opcional)</label>
+                            <textarea id="req-msg" rows="2" maxlength="200" placeholder="Manda um alô pra galera do Renascença..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mojo-pink transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-mojo-purple via-mojo-pink to-mojo-orange hover:opacity-95 text-white font-bold py-3 rounded-xl transition duration-300 shadow-lg shadow-mojo-purple/20 flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-paper-plane"></i> ENVIAR PEDIDO
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- CHAT AO VIVO / MENSAGENS DOS OUVINTES -->
+            <div class="lg:col-span-7 glass-panel rounded-3xl p-6 border border-white/10 flex flex-col h-[480px]">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-mojo-blue/20 border border-mojo-blue/30 flex items-center justify-center text-mojo-blue">
+                            <i class="fa-solid fa-comments text-lg" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Mural dos Ouvintes</h3>
+                            <p class="text-xs text-gray-400">Mensagens enviadas em tempo real para a rádio</p>
+                        </div>
+                    </div>
+                    <span class="hidden sm:inline-block shrink-0 whitespace-nowrap text-xs font-digital text-mojo-blue bg-mojo-blue/10 px-2.5 py-1 rounded-full border border-mojo-blue/20">
+                        CHAT AO VIVO
+                    </span>
+                </div>
+
+                <!-- Chat Feed Stream -->
+                <div id="chat-feed" class="flex-grow overflow-y-auto space-y-3 pr-2 mb-4" aria-live="polite">
+                    <!-- Dynamic Messages Inserted Here -->
+                </div>
+
+                <!-- Quick Interactive Chat Form -->
+                <form id="chat-form" onsubmit="sendChatMessage(event)" class="flex gap-2 pt-2 border-t border-white/10">
+                    <input type="text" id="chat-input" maxlength="180" placeholder="Envie uma mensagem rápida no chat..." required class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-mojo-blue transition">
+                    <button type="submit" class="bg-mojo-blue hover:bg-cyan-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl transition flex items-center justify-center" aria-label="Enviar mensagem">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-7xl mx-auto px-4 lg:px-8 mt-auto pt-6 border-t border-white/10 text-center md:text-left">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+            <div>
+                <p class="font-semibold text-gray-300">RÁDIO MOJÓ 180.9 FM &copy; 2026 - Todos os Direitos Reservados.</p>
+                <p class="mt-0.5">Sintonize a melhor programação: Sertanejo, Piseiro, Arrocha, Pop, Funk e muito mais!</p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex items-center gap-3">
+                <a href="#" onclick="showToast('Instagram: @radiomojo1809'); return false;" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:bg-mojo-pink hover:text-white flex items-center justify-center transition" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#" onclick="showToast('WhatsApp da Rádio: (98) 91809-1809'); return false;" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="#" onclick="showToast('YouTube: Rádio Mojó FM Oficial'); return false;" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:bg-red-600 hover:text-white flex items-center justify-center transition" aria-label="YouTube">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+                <a href="#" onclick="showToast('Facebook: Rádio Mojó 180.9'); return false;" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 hover:bg-blue-600 hover:text-white flex items-center justify-center transition" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none" role="status" aria-live="polite">
+        <div class="bg-slate-900 border border-mojo-purple text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 max-w-xs">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-mojo-pink text-lg" aria-hidden="true"></i>
+            <span id="toast-message" class="text-sm font-medium">Notificação da Rádio Mojó</span>
+        </div>
+    </div>
+
+    <!-- AUDIO ENGINE & LOGIC SCRIPT -->
+    <script>
+        // Playlist & Radio Genres Data
+        const radioProgrammation = [
+            {
+                id: 'sertanejo',
+                badge: 'SERTANEJO & MODÃO',
+                title: 'Modão de Boteco (Sertanejo Universitário)',
+                artist: 'Dupla Serrana & Rádio Mojó',
+                genre: 'Sertanejo',
+                cover: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop',
+                description: 'Violão, sofrência e os maiores modões do Brasil.',
+                color: 'from-amber-500 to-orange-600',
+                duration: 207
+            },
+            {
+                id: 'piseiro',
+                badge: 'PISEIRO & PAREDÃO',
+                title: 'Paredão Ligado no Máximo',
+                artist: 'Os Barões do Piseiro & Mojó',
+                genre: 'Piseiro',
+                cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop',
+                description: 'O ritmo acelerado que domina os paredões do Norte e Nordeste.',
+                color: 'from-mojo-orange to-mojo-pink',
+                duration: 198
+            },
+            {
+                id: 'arrocha',
+                badge: 'ARROCHA & SOFRÊNCIA',
+                title: 'Coração na Sofia (Arrocha)',
+                artist: 'Banda Meu Sofrimento',
+                genre: 'Arrocha',
+                cover: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=600&auto=format&fit=crop',
+                description: 'Teclado romântico e sofrência para cantar junto e chorar.',
+                color: 'from-rose-600 to-mojo-purple',
+                duration: 219
+            },
+            {
+                id: 'pop',
+                badge: 'POP BRASIL',
+                title: 'Hit do Verão 180.9 FM',
+                artist: 'Mojó Global Hits',
+                genre: 'Pop / Dance',
+                cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600&auto=format&fit=crop',
+                description: 'Os sucessos brasileiros que dominam as paradas e as festas.',
+                color: 'from-mojo-purple to-pink-600',
+                duration: 213
+            },
+            {
+                id: 'funk',
+                badge: 'FUNK & TAMBORZÃO',
+                title: 'Baile do Mojó (Funk Carioca)',
+                artist: 'DJ Mojó & MC 180.9',
+                genre: 'Funk',
+                cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600&auto=format&fit=crop',
+                description: 'Tamborzão, grave pesado e o melhor funk carioca do momento.',
+                color: 'from-fuchsia-600 to-mojo-blue',
+                duration: 186
+            }
+        ];
+
+        // Sound design per genre for the built-in Web Audio engine
+        const genrePatterns = {
+            sertanejo: {
+                bpm: 96,
+                root: 43, // G2
+                bass: [0, null, null, null, 5, null, null, null, 7, null, null, null, 5, null, null, null],
+                chord: [0, null, null, null, null, null, 5, null, 7, null, null, null, null, null, 5, null],
+                chordShape: [0, 4, 7, 12],
+                kick: [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0],
+                snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                hat: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+                wave: 'triangle',
+                chordWave: 'triangle'
+            },
+            piseiro: {
+                bpm: 142,
+                root: 40, // E2
+                bass: [0, 0, null, 0, 7, null, 0, 0, 0, 0, null, 0, 10, null, 7, null],
+                chord: [0, null, 0, null, 0, null, 0, null, 5, null, 5, null, 5, null, 5, null],
+                chordShape: [0, 4, 7],
+                kick: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+                snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                hat: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                wave: 'sawtooth',
+                chordWave: 'square'
+            },
+            arrocha: {
+                bpm: 132,
+                root: 41, // F2
+                bass: [0, null, null, 0, 5, null, null, null, 7, null, null, null, 5, null, null, 0],
+                chord: [0, null, null, null, 5, null, null, null, 7, null, null, null, 5, null, null, null],
+                chordShape: [0, 3, 7, 10],
+                kick: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+                snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                hat: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+                wave: 'sine',
+                chordWave: 'sawtooth'
+            },
+            pop: {
+                bpm: 124,
+                root: 45, // A2
+                bass: [0, null, 0, null, 7, null, 0, null, 0, null, 0, null, 5, null, 7, null],
+                chord: [0, null, 0, null, 0, null, 0, null, 5, null, 5, null, 7, null, 7, null],
+                chordShape: [0, 3, 7],
+                kick: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+                snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                hat: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+                wave: 'square',
+                chordWave: 'triangle'
+            },
+            funk: {
+                bpm: 130,
+                root: 38, // D2
+                bass: [0, null, 0, 0, null, 0, 3, null, 0, null, 0, 5, null, 3, null, 0],
+                chord: [0, null, null, 0, null, null, 3, null, 0, null, null, 5, null, null, 3, null],
+                chordShape: [0, 3, 7],
+                kick: [1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+                snare: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+                clap: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+                hat: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                wave: 'sawtooth',
+                chordWave: 'square'
+            }
+        };
+
+        // Simulated Live Listener Comments
+        const initialComments = [
+            { name: "Marcos Vinícius", city: "Cohama - São Luís", msg: "Sintonizado na Rádio Mojó! Esse sertanejo tá bom demais aqui!", time: "Agora" },
+            { name: "Juliana Mendes", city: "Maiobão", msg: "Manda um beijo pra galera da minha rua! 180.9 FM é top!", time: "Há 1 min" },
+            { name: "Raimundo Nonato", city: "Turu", msg: "Melhor rádio da cidade, toca todos os ritmos mesmo!", time: "Há 3 min" },
+            { name: "Fernanda Lima", city: "São Cristóvão", msg: "Aumenta o volume do Piseiro!! Toca Barões!", time: "Há 5 min" }
+        ];
+
+        // Global State variables
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let isMuted = false;
+        let likesCount = 18900;
+        let isLiked = false;
+        let volumeLevel = 0.8;
+        let elapsed = 0;
+        let lastTick = 0;
+        let progressTimer = null;
+
+        // DOM Element References
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const trackTitle = document.getElementById('track-title');
+        const trackArtist = document.getElementById('track-artist');
+        const trackCover = document.getElementById('track-cover');
+        const trackGenreBadge = document.getElementById('track-genre-badge');
+        const progressBar = document.getElementById('progress-bar');
+        const progressBarContainer = document.getElementById('progress-bar-container');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalTimeEl = document.getElementById('total-time');
+        const eqContainer = document.getElementById('eq-container');
+        const artworkContainer = document.getElementById('artwork-container');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeIcon = document.getElementById('volume-icon');
+
+        // ---------------------------------------------------------------
+        // WEB AUDIO ENGINE (generated music, works fully offline)
+        // ---------------------------------------------------------------
+        const audioEngine = {
+            ctx: null,
+            master: null,
+            timer: null,
+            step: 0,
+            nextNoteTime: 0,
+            pattern: null,
+            noiseBuffer: null,
+
+            ensure() {
+                if (this.ctx) return;
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                this.ctx = new AudioCtx();
+
+                this.master = this.ctx.createGain();
+                this.master.gain.value = isMuted ? 0 : volumeLevel;
+
+                const compressor = this.ctx.createDynamicsCompressor();
+                compressor.threshold.value = -16;
+                compressor.knee.value = 20;
+                compressor.ratio.value = 6;
+                compressor.attack.value = 0.004;
+                compressor.release.value = 0.2;
+
+                this.master.connect(compressor);
+                compressor.connect(this.ctx.destination);
+
+                // Pre-render a short noise buffer for hats / snares
+                const len = Math.floor(this.ctx.sampleRate * 0.3);
+                this.noiseBuffer = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+                const data = this.noiseBuffer.getChannelData(0);
+                for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+            },
+
+            start(patternKey) {
+                this.ensure();
+                if (!this.ctx) return;
+                this.pattern = genrePatterns[patternKey] || genrePatterns.sertanejo;
+                this.step = 0;
+                this.nextNoteTime = this.ctx.currentTime + 0.08;
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                if (this.timer) clearInterval(this.timer);
+                this.timer = setInterval(() => this.schedule(), 25);
+                this.schedule();
+            },
+
+            stop() {
+                if (this.timer) clearInterval(this.timer);
+                this.timer = null;
+            },
+
+            schedule() {
+                if (!this.ctx || !this.pattern) return;
+                const stepDur = 60 / this.pattern.bpm / 4;
+                while (this.nextNoteTime < this.ctx.currentTime + 0.15) {
+                    this.playStep(this.step, this.nextNoteTime);
+                    this.nextNoteTime += stepDur;
+                    this.step = (this.step + 1) % 16;
+                }
+            },
+
+            midiToFreq(midi) {
+                return 440 * Math.pow(2, (midi - 69) / 12);
+            },
+
+            envelope(gainNode, time, peak, attack, decay) {
+                const g = gainNode.gain;
+                g.setValueAtTime(0.0001, time);
+                g.exponentialRampToValueAtTime(Math.max(peak, 0.0002), time + attack);
+                g.exponentialRampToValueAtTime(0.0001, time + attack + decay);
+            },
+
+            playStep(step, time) {
+                const p = this.pattern;
+                const stepDur = 60 / p.bpm / 4;
+
+                if (p.kick[step]) this.kick(time);
+                if (p.snare[step]) this.snare(time);
+                if (p.clap && p.clap[step]) this.clap(time);
+                if (p.hat[step]) this.hat(time, step % 2 === 0 ? 0.16 : 0.1);
+
+                const bassNote = p.bass[step];
+                if (bassNote !== null && bassNote !== undefined) {
+                    this.bass(this.midiToFreq(p.root + bassNote), time, stepDur);
+                }
+
+                const chordNote = p.chord[step];
+                if (chordNote !== null && chordNote !== undefined) {
+                    this.chord(p.root + 12 + chordNote, p.chordShape, time, stepDur);
+                }
+            },
+
+            kick(time) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(135, time);
+                osc.frequency.exponentialRampToValueAtTime(44, time + 0.13);
+                this.envelope(gain, time, 0.9, 0.005, 0.32);
+                osc.connect(gain);
+                gain.connect(this.master);
+                osc.start(time);
+                osc.stop(time + 0.4);
+            },
+
+            snare(time) {
+                const src = this.ctx.createBufferSource();
+                src.buffer = this.noiseBuffer;
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 1900;
+                filter.Q.value = 0.9;
+                const gain = this.ctx.createGain();
+                this.envelope(gain, time, 0.45, 0.003, 0.16);
+                src.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.master);
+                src.start(time);
+                src.stop(time + 0.22);
+
+                const osc = this.ctx.createOscillator();
+                const toneGain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(190, time);
+                this.envelope(toneGain, time, 0.22, 0.003, 0.09);
+                osc.connect(toneGain);
+                toneGain.connect(this.master);
+                osc.start(time);
+                osc.stop(time + 0.15);
+            },
+
+            clap(time) {
+                const src = this.ctx.createBufferSource();
+                src.buffer = this.noiseBuffer;
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 1150;
+                filter.Q.value = 1.2;
+                const gain = this.ctx.createGain();
+                this.envelope(gain, time, 0.32, 0.004, 0.12);
+                src.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.master);
+                src.start(time);
+                src.stop(time + 0.2);
+            },
+
+            hat(time, peak) {
+                const src = this.ctx.createBufferSource();
+                src.buffer = this.noiseBuffer;
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'highpass';
+                filter.frequency.value = 7500;
+                const gain = this.ctx.createGain();
+                this.envelope(gain, time, peak, 0.002, 0.05);
+                src.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.master);
+                src.start(time);
+                src.stop(time + 0.08);
+            },
+
+            bass(freq, time, stepDur) {
+                const osc = this.ctx.createOscillator();
+                const filter = this.ctx.createBiquadFilter();
+                const gain = this.ctx.createGain();
+                osc.type = this.pattern.wave;
+                osc.frequency.setValueAtTime(freq, time);
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(600, time);
+                filter.frequency.exponentialRampToValueAtTime(180, time + stepDur * 1.6);
+                this.envelope(gain, time, 0.32, 0.008, stepDur * 1.7);
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.master);
+                osc.start(time);
+                osc.stop(time + stepDur * 2);
+            },
+
+            chord(rootMidi, shape, time, stepDur) {
+                const dur = Math.min(stepDur * 2.2, 0.5);
+                shape.forEach((semi, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const filter = this.ctx.createBiquadFilter();
+                    const gain = this.ctx.createGain();
+                    osc.type = this.pattern.chordWave;
+                    osc.frequency.setValueAtTime(this.midiToFreq(rootMidi + semi), time);
+                    osc.detune.value = (i - 1) * 5;
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 2200;
+                    this.envelope(gain, time, 0.06, 0.006, dur);
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(this.master);
+                    osc.start(time);
+                    osc.stop(time + dur + 0.08);
+                });
+            },
+
+            setVolume(value) {
+                volumeLevel = Number(value);
+                if (this.master && !isMuted) {
+                    this.master.gain.setTargetAtTime(volumeLevel, this.ctx.currentTime, 0.02);
+                }
+            },
+
+            setMuted(muted) {
+                if (!this.master) return;
+                this.master.gain.setTargetAtTime(muted ? 0 : volumeLevel, this.ctx.currentTime, 0.02);
+            }
+        };
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            initGenreGrid();
+            initAudioPlayer();
+            initLiveClock();
+            initSimulatedChat();
+            startListenerCountAnimation();
+            updateVolumeSliderFill(volumeLevel);
+        });
+
+        // Initialize Audio Player
+        function initAudioPlayer() {
+            loadTrack(currentTrackIndex);
+
+            progressBarContainer.addEventListener('click', (e) => {
+                const rect = progressBarContainer.getBoundingClientRect();
+                const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+                seekTo(ratio * getCurrentTrack().duration);
+            });
+
+            progressBarContainer.addEventListener('keydown', (e) => {
+                const track = getCurrentTrack();
+                if (e.key === 'ArrowRight') {
+                    seekTo(Math.min(elapsed + 5, track.duration));
+                    e.preventDefault();
+                } else if (e.key === 'ArrowLeft') {
+                    seekTo(Math.max(elapsed - 5, 0));
+                    e.preventDefault();
+                }
+            });
+
+            progressTimer = setInterval(tickProgress, 250);
+        }
+
+        function getCurrentTrack() {
+            return radioProgrammation[currentTrackIndex];
+        }
+
+        // Load Track Data
+        function loadTrack(index) {
+            currentTrackIndex = index;
+            const track = getCurrentTrack();
+
+            elapsed = 0;
+            lastTick = performance.now();
+            trackTitle.innerText = track.title;
+            trackArtist.innerText = track.artist;
+            trackCover.src = track.cover;
+            trackCover.alt = `Capa: ${track.title}`;
+            trackGenreBadge.innerText = track.genre;
+            totalTimeEl.innerText = formatTime(track.duration);
+            progressBar.style.width = '0%';
+            currentTimeEl.innerText = formatTime(0);
+            progressBarContainer.setAttribute('aria-valuemax', String(track.duration));
+            progressBarContainer.setAttribute('aria-valuenow', '0');
+
+            updateActiveCardHighlight();
+
+            if (isPlaying) {
+                audioEngine.start(track.id);
+            }
+        }
+
+        // Play / Pause Toggle
+        function togglePlay() {
+            if (isPlaying) {
+                isPlaying = false;
+                audioEngine.stop();
+                playIcon.className = "fa-solid fa-play relative z-10 ml-1";
+                playBtn.setAttribute('aria-label', 'Reproduzir');
+                eqContainer.classList.remove('playing');
+                artworkContainer.classList.remove('ring-4', 'ring-mojo-pink/50');
+            } else {
+                isPlaying = true;
+                lastTick = performance.now();
+                audioEngine.start(getCurrentTrack().id);
+                playIcon.className = "fa-solid fa-pause relative z-10";
+                playBtn.setAttribute('aria-label', 'Pausar');
+                eqContainer.classList.add('playing');
+                artworkContainer.classList.add('ring-4', 'ring-mojo-pink/50');
+                showToast("Tocando Rádio Mojó Ao Vivo!");
+            }
+        }
+
+        // Change Track (Next / Prev)
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % radioProgrammation.length;
+            loadTrack(currentTrackIndex);
+            if (!isPlaying) togglePlay();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + radioProgrammation.length) % radioProgrammation.length;
+            loadTrack(currentTrackIndex);
+            if (!isPlaying) togglePlay();
+        }
+
+        // Select Track by Genre Card
+        function selectGenre(index) {
+            loadTrack(index);
+            if (!isPlaying) {
+                togglePlay();
+            }
+            showToast(`Sintonizado em: ${radioProgrammation[index].badge}`);
+        }
+
+        // Simulated Stream Progress
+        function tickProgress() {
+            if (!isPlaying) return;
+            const now = performance.now();
+            const delta = (now - lastTick) / 1000;
+            lastTick = now;
+            const track = getCurrentTrack();
+            elapsed = Math.min(elapsed + delta, track.duration);
+
+            const percent = (elapsed / track.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            currentTimeEl.innerText = formatTime(elapsed);
+            progressBarContainer.setAttribute('aria-valuenow', String(Math.floor(elapsed)));
+
+            if (elapsed >= track.duration) {
+                nextTrack();
+            }
+        }
+
+        function seekTo(seconds) {
+            elapsed = Math.min(Math.max(seconds, 0), getCurrentTrack().duration);
+            lastTick = performance.now();
+            const percent = (elapsed / getCurrentTrack().duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            currentTimeEl.innerText = formatTime(elapsed);
+            progressBarContainer.setAttribute('aria-valuenow', String(Math.floor(elapsed)));
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Volume Control
+        function changeVolume(value) {
+            volumeLevel = Number(value);
+            audioEngine.setVolume(volumeLevel);
+            updateVolumeSliderFill(volumeLevel);
+
+            if (volumeLevel === 0) {
+                volumeIcon.className = "fa-solid fa-volume-xmark";
+            } else if (volumeLevel < 0.5) {
+                volumeIcon.className = "fa-solid fa-volume-low";
+            } else {
+                volumeIcon.className = "fa-solid fa-volume-high";
+            }
+
+            if (isMuted && volumeLevel > 0) {
+                isMuted = false;
+                audioEngine.setMuted(false);
+            }
+        }
+
+        function updateVolumeSliderFill(value) {
+            const percent = Math.round(Number(value) * 100);
+            volumeSlider.style.background = `linear-gradient(to right, #ec4899 ${percent}%, rgba(255,255,255,0.2) ${percent}%)`;
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            audioEngine.setMuted(isMuted);
+            if (isMuted) {
+                volumeIcon.className = "fa-solid fa-volume-xmark text-red-400";
+            } else {
+                changeVolume(volumeSlider.value);
+            }
+        }
+
+        // Render Genre / Programming Cards
+        function initGenreGrid() {
+            const container = document.getElementById('genre-grid');
+            container.innerHTML = '';
+
+            radioProgrammation.forEach((prog, index) => {
+                const card = document.createElement('div');
+                card.className = `glass-card rounded-2xl p-4 cursor-pointer relative overflow-hidden group genre-card-${index}`;
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('aria-label', `Ouvir ${prog.badge}`);
+                card.onclick = () => selectGenre(index);
+                card.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectGenre(index);
+                    }
+                };
+
+                card.innerHTML = `
+                    <div class="relative h-36 rounded-xl overflow-hidden mb-3">
+                        <img src="${prog.cover}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="${prog.title}" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                        <span class="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-[10px] font-bold font-digital px-2 py-0.5 rounded text-mojo-gold border border-white/10">
+                            ${prog.genre}
+                        </span>
+                        <div class="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+                            <span class="w-8 h-8 rounded-full bg-mojo-pink/80 flex items-center justify-center text-white text-xs opacity-0 group-hover:opacity-100 transition duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                <i class="fa-solid fa-play"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-mojo-pink transition truncate">${prog.badge}</h4>
+                    <p class="text-xs text-gray-400 line-clamp-2 mt-1">${prog.description}</p>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function updateActiveCardHighlight() {
+            radioProgrammation.forEach((_, idx) => {
+                const card = document.querySelector(`.genre-card-${idx}`);
+                if (card) {
+                    if (idx === currentTrackIndex) {
+                        card.classList.add('border-mojo-pink', 'bg-white/10');
+                    } else {
+                        card.classList.remove('border-mojo-pink', 'bg-white/10');
+                    }
+                }
+            });
+        }
+
+        // Live Clock (São Luís - MA, UTC-3)
+        function initLiveClock() {
+            const clockEl = document.getElementById('digital-clock');
+            const updateClock = () => {
+                const now = new Date();
+                const slz = new Date(now.getTime() - 3 * 60 * 60 * 1000 + now.getTimezoneOffset() * 60 * 1000);
+                const hours = String(slz.getHours()).padStart(2, '0');
+                const minutes = String(slz.getMinutes()).padStart(2, '0');
+                const seconds = String(slz.getSeconds()).padStart(2, '0');
+                clockEl.innerText = `${hours}:${minutes}:${seconds}`;
+            };
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        // Simulated Listener Counter Animation
+        function startListenerCountAnimation() {
+            const countEl = document.getElementById('listener-count');
+            setInterval(() => {
+                const variation = Math.floor(Math.random() * 11) - 5;
+                let current = parseInt(countEl.innerText.replace(/\./g, ''), 10) + variation;
+                if (current < 1500) current = 1809;
+                countEl.innerText = current.toLocaleString('pt-BR');
+            }, 4000);
+        }
+
+        // Chat & Listener Interaction Logic
+        function initSimulatedChat() {
+            const feed = document.getElementById('chat-feed');
+            feed.innerHTML = '';
+            initialComments.forEach(c => addChatMessage(c.name, c.city, c.msg, c.time));
+
+            const autoMessages = [
+                { name: "Lúcio Sampaio", city: "Anjo da Guarda", msg: "Manda um abraço pra rapaziada do bairro!" },
+                { name: "Camila Rocha", city: "Calhau", msg: "A programação da Mojó 180.9 tá sensacional!" },
+                { name: "Gabriel Costa", city: "Vinhais", msg: "Tocando só as melhores! Parabéns Rádio Mojó!" }
+            ];
+
+            let msgIndex = 0;
+            setInterval(() => {
+                if (msgIndex < autoMessages.length) {
+                    const item = autoMessages[msgIndex];
+                    addChatMessage(item.name, item.city, item.msg, "Agora");
+                    msgIndex++;
+                }
+            }, 12000);
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function addChatMessage(name, city, msg, time = "Agora", requestLabel = null) {
+            const feed = document.getElementById('chat-feed');
+            const item = document.createElement('div');
+            item.className = "bg-white/5 border border-white/5 rounded-2xl p-3 text-xs space-y-1 animate-fade-in";
+
+            const prefix = requestLabel
+                ? `<b class="text-mojo-gold">${escapeHtml(requestLabel)}</b> `
+                : '';
+
+            item.innerHTML = `
+                <div class="flex justify-between items-center gap-2">
+                    <span class="font-bold text-mojo-blue flex items-center gap-1.5 min-w-0">
+                        <i class="fa-solid fa-circle-user text-gray-400" aria-hidden="true"></i>
+                        <span class="truncate">${escapeHtml(name)}</span>
+                        <span class="text-[10px] text-gray-400 font-normal truncate">(${escapeHtml(city)})</span>
+                    </span>
+                    <span class="text-[10px] text-gray-500 font-digital whitespace-nowrap">${escapeHtml(time)}</span>
+                </div>
+                <p class="text-gray-200 pl-5 break-words">${prefix}${escapeHtml(msg)}</p>
+            `;
+
+            feed.prepend(item);
+
+            while (feed.children.length > 40) {
+                feed.removeChild(feed.lastElementChild);
+            }
+            feed.scrollTop = 0;
+        }
+
+        function sendChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const value = input.value.trim();
+            if (value !== "") {
+                addChatMessage("Você", "Ouvinte Online", value, "Agora");
+                input.value = "";
+                showToast("Sua mensagem foi enviada ao mural!");
+            }
+        }
+
+        // Music Request Form Handler
+        function submitMusicRequest(e) {
+            e.preventDefault();
+            const name = document.getElementById('req-name').value.trim();
+            const city = document.getElementById('req-city').value.trim();
+            const song = document.getElementById('req-song').value.trim();
+            const msg = document.getElementById('req-msg').value.trim();
+
+            const fullMsg = `${song}${msg ? ` - "${msg}"` : ''}`;
+            addChatMessage(name, city, fullMsg, "Agora", "PEDIDO DE MÚSICA:");
+
+            document.getElementById('request-form').reset();
+            showToast("Seu pedido de música foi entregue ao locutor!");
+        }
+
+        // Like Radio
+        function toggleLike() {
+            const likeIcon = document.getElementById('like-icon');
+            const likeCount = document.getElementById('like-count');
+
+            if (!isLiked) {
+                isLiked = true;
+                likesCount++;
+                likeIcon.className = "fa-solid fa-heart text-mojo-pink text-sm scale-125 transition-transform duration-300";
+                showToast("Obrigado pelo carinho com a Rádio Mojó!");
+            } else {
+                isLiked = false;
+                likesCount--;
+                likeIcon.className = "fa-regular fa-heart text-mojo-pink text-sm transition-transform duration-300";
+            }
+
+            likeCount.innerText = (likesCount / 1000).toFixed(1) + 'K';
+        }
+
+        // Share Radio Action
+        function shareRadio() {
+            const message = "Estou ouvindo a Rádio Mojó 180.9 FM - Tocando Todos os Ritmos! Sintonize você também!";
+
+            const fallbackCopy = () => {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = message;
+                tempInput.setAttribute('readonly', '');
+                tempInput.style.position = 'absolute';
+                tempInput.style.left = '-9999px';
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try { document.execCommand('copy'); } catch (err) { /* ignore */ }
+                document.body.removeChild(tempInput);
+                showToast("Convite da Rádio Mojó copiado com sucesso!");
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(message)
+                    .then(() => showToast("Convite da Rádio Mojó copiado com sucesso!"))
+                    .catch(fallbackCopy);
+            } else {
+                fallbackCopy();
+            }
+        }
+
+        // Universal Toast Notification
+        let toastTimeout = null;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
