@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gerador de Título de Eleitor fictício, válido pelo algoritmo módulo 11, para testes de sistemas.">
+  <title>Título Fictício — Gerador de Título de Eleitor</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <span class="orb orb-green"></span>
+    <span class="orb orb-yellow"></span>
+    <span class="grid-lines"></span>
+  </div>
+
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Título Fictício, página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/>
+            <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5z"/>
+            <path d="M8 7h8M8 10.5h5"/>
+          </svg>
+        </span>
+        <span class="brand-text">Título<strong>Fictício</strong></span>
+      </a>
+      <span class="badge"><span class="badge-dot"></span>Dados fictícios</span>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Gerador para QA e desenvolvimento</p>
+      <h1>Título de Eleitor <span class="accent">fictício</span>, pronto para testar.</h1>
+      <p class="lead">
+        Números gerados com o algoritmo oficial de módulo 11, no formato de 12 dígitos
+        (8 sequenciais + 2 da UF + 2 verificadores). Nenhum dado real é consultado.
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Gerador e informações">
+      <article class="card generator">
+        <div class="card-head">
+          <span class="card-kicker"><span class="signal" aria-hidden="true"></span>Título gerado</span>
+          <span class="pill" id="status"><span class="pill-dot"></span><span id="status-text">Válido</span></span>
+        </div>
+
+        <div class="titulo-wrap">
+          <p class="titulo" id="titulo" aria-live="polite" aria-atomic="true">0000 0000 0000</p>
+          <p class="titulo-caption" id="titulo-caption">Sequencial 00000000 · UF aleatória · DVs 00</p>
+        </div>
+
+        <dl class="compose" aria-label="Composição do título">
+          <div>
+            <dt>Sequencial</dt>
+            <dd id="seq">00000000</dd>
+          </div>
+          <div>
+            <dt>Unidade da Federação</dt>
+            <dd><span id="uf-code">00</span> <span class="muted" id="uf-name">Aleatória</span></dd>
+          </div>
+          <div>
+            <dt>Dígitos verificadores</dt>
+            <dd id="dv">00</dd>
+          </div>
+        </dl>
+
+        <div class="controls">
+          <label class="field" for="uf-select">
+            <span>Estado emissor</span>
+            <select id="uf-select">
+              <option value="random">Aleatório</option>
+              <option value="1">01 — São Paulo</option>
+              <option value="2">02 — Minas Gerais</option>
+              <option value="3">03 — Rio de Janeiro</option>
+              <option value="4">04 — Rio Grande do Sul</option>
+              <option value="5">05 — Bahia</option>
+              <option value="6">06 — Paraná</option>
+              <option value="7">07 — Ceará</option>
+              <option value="8">08 — Pernambuco</option>
+              <option value="9">09 — Santa Catarina</option>
+              <option value="10">10 — Goiás</option>
+              <option value="11">11 — Maranhão</option>
+              <option value="12">12 — Paraíba</option>
+              <option value="13">13 — Pará</option>
+              <option value="14">14 — Espírito Santo</option>
+              <option value="15">15 — Piauí</option>
+              <option value="16">16 — Rio Grande do Norte</option>
+              <option value="17">17 — Alagoas</option>
+              <option value="18">18 — Mato Grosso</option>
+              <option value="19">19 — Mato Grosso do Sul</option>
+              <option value="20">20 — Distrito Federal</option>
+              <option value="21">21 — Sergipe</option>
+              <option value="22">22 — Amazonas</option>
+              <option value="23">23 — Rondônia</option>
+              <option value="24">24 — Acre</option>
+              <option value="25">25 — Amapá</option>
+              <option value="26">26 — Roraima</option>
+              <option value="27">27 — Tocantins</option>
+              <option value="28">28 — Exterior (ZZ)</option>
+            </select>
+          </label>
+
+          <div class="actions">
+            <button class="btn primary" id="gerar" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12a9 9 0 1 1-2.64-6.36"/>
+                <path d="M21 3v6h-6"/>
+              </svg>
+              Gerar outro
+            </button>
+            <button class="btn ghost" id="copiar" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="12" height="12" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="copiar-label">Copiar</span>
+            </button>
+          </div>
+        </div>
+
+        <p class="hint">Atalhos: <kbd>G</kbd> gera um novo título · <kbd>C</kbd> copia o número.</p>
+      </article>
+
+      <aside class="side">
+        <article class="card">
+          <div class="card-head compact">
+            <h2>Últimos gerados</h2>
+            <span class="counter" id="counter">1</span>
+          </div>
+          <ul class="history" id="history" aria-live="polite"></ul>
+        </article>
+
+        <article class="card code-card">
+          <div class="card-head compact">
+            <h2>Gerar em Python</h2>
+            <span class="tag">script</span>
+          </div>
+          <pre><code><span class="cm"># pip install validate-docbr</span>
+<span class="kw">from</span> validate_docbr <span class="kw">import</span> TituloEleitoral
+
+titulo = TituloEleitoral().generate(mask=<span class="kw">True</span>)
+<span class="fn">print</span>(titulo)  <span class="cm"># 1234 5678 9012</span></code></pre>
+          <p class="code-note">
+            O <code>Faker pt_BR</code> não oferece título de eleitor nativamente; esta biblioteca
+            implementa o mesmo cálculo de módulo 11 usado aqui.
+          </p>
+        </article>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <p>
+        <strong>Uso restrito a testes.</strong> Os números são aleatórios e não correspondem a
+        eleitores reais. Não utilize para fraude, cadastros indevidos ou qualquer finalidade ilícita.
+      </p>
+      <span class="footer-meta">Módulo 11 · 12 dígitos · UF 01–28</span>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copiado!</div>
+  <script src="app.js"></script>
+</body>
+</html>
