@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabuada Falante — ouça e aprenda</title>
+  <meta name="description" content="Tabuada falante de adição, subtração, multiplicação e divisão. Ouça do 1 ao 10, repita no seu ritmo e depois jogue o desafio da tabuada.">
+  <meta name="theme-color" content="#f8f2e8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%236a4cf5'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3E%C3%97%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-op="add">
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+    <span class="float-symbol float-plus">+</span>
+    <span class="float-symbol float-times">×</span>
+    <span class="float-symbol float-minus">−</span>
+    <span class="float-symbol float-divide">÷</span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Tabuada Falante, início">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="dot dot-1"></span>
+        <span class="dot dot-2"></span>
+        <span class="dot dot-3"></span>
+        <span class="dot dot-4"></span>
+      </span>
+      <span class="brand-text">
+        <strong>Tabuada Falante</strong>
+        <small>Ouça, repita, aprenda.</small>
+      </span>
+    </a>
+
+    <nav class="view-tabs" aria-label="Seções do app">
+      <button id="tabLearn" class="view-tab is-active" type="button" aria-current="page" aria-controls="learnView">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6.5A2.5 2.5 0 0 0 4 21.5V5.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></svg>
+        Aprender
+      </button>
+      <button id="tabGame" class="view-tab" type="button" aria-controls="gameView">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10a4 4 0 0 1 4 4v1a9 9 0 1 1-18 0V8a4 4 0 0 1 4-4Z"/><path d="M9.5 10.5h.01M14.5 10.5h.01"/><path d="M9 14c.8.8 1.8 1.2 3 1.2s2.2-.4 3-1.2"/></svg>
+        Brincar
+      </button>
+    </nav>
+  </header>
+
+  <main class="app">
+    <section id="learnView" class="view" aria-labelledby="learnTitle">
+      <div class="learn-intro">
+        <span class="eyebrow">Do 1 ao 10, sem pressa</span>
+        <h1 id="learnTitle">A tabuada que fala com você</h1>
+        <p>Escolha a operação e a tabuada. Aperte ouvir e acompanhe cada conta em voz alta — uma depois da outra, quantas vezes quiser.</p>
+      </div>
+
+      <div class="lesson-layout">
+        <div class="lesson-main">
+          <section class="panel settings-panel" aria-label="Escolha da tabuada">
+            <div class="op-switch" role="group" aria-label="Escolha a operação">
+              <button class="op-btn" type="button" data-op="add" aria-pressed="true">
+                <span class="op-symbol">+</span>
+                <span class="op-name">Adição</span>
+              </button>
+              <button class="op-btn" type="button" data-op="sub" aria-pressed="false">
+                <span class="op-symbol">−</span>
+                <span class="op-name">Subtração</span>
+              </button>
+              <button class="op-btn" type="button" data-op="mul" aria-pressed="false">
+                <span class="op-symbol">×</span>
+                <span class="op-name">Multiplicação</span>
+              </button>
+              <button class="op-btn" type="button" data-op="div" aria-pressed="false">
+                <span class="op-symbol">÷</span>
+                <span class="op-name">Divisão</span>
+              </button>
+            </div>
+
+            <div class="chips-head">
+              <h2>Qual tabuada?</h2>
+              <span id="chipsHint">Escolha de 1 a 10</span>
+            </div>
+            <div id="tableChips" class="table-chips" role="group" aria-label="Escolha o número da tabuada"></div>
+          </section>
+
+          <section class="stage-card" id="stageCard" aria-label="Tabuada atual">
+            <div class="stage-top">
+              <span id="stageBadge" class="stamp">Tabuada do 1</span>
+              <span id="speakingBadge" class="speaking-badge" aria-hidden="true">
+                <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span>Falando</span>
+              </span>
+            </div>
+
+            <div class="equation-wrap">
+              <p id="equation" class="equation" aria-live="off"></p>
+              <p id="equationSentence" class="equation-sentence">um mais um é igual a dois</p>
+            </div>
+
+            <div class="progress-block">
+              <div class="progress-meta">
+                <span id="progressLabel">Conta 1 de 10</span>
+                <span id="progressTable">Tabuada do 1</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Progresso da tabuada" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="progressBar">
+                <span id="progressFill"></span>
+              </div>
+            </div>
+
+            <div class="transport">
+              <div class="transport-buttons">
+                <button id="btnPrev" class="round-btn" type="button" aria-label="Conta anterior">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+                </button>
+                <button id="btnPlay" class="play-btn" type="button" aria-label="Ouvir toda a tabuada">
+                  <span id="playIcon" class="play-icon" aria-hidden="true"></span>
+                  <span id="playLabel">Ouvir tudo</span>
+                </button>
+                <button id="btnNext" class="round-btn" type="button" aria-label="Próxima conta">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                </button>
+                <button id="btnStop" class="round-btn stop-btn" type="button" aria-label="Parar e voltar ao início">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>
+                </button>
+              </div>
+
+              <div class="settings-inline">
+                <label class="speed-control" for="speedRange">
+                  <span class="speed-label">Velocidade</span>
+                  <input id="speedRange" type="range" min="0.6" max="1.6" step="0.1" value="1" aria-label="Velocidade da voz">
+                  <output id="speedValue" for="speedRange">1x</output>
+                </label>
+
+                <button id="toggleRepeat" class="toggle is-on" type="button" aria-pressed="true">
+                  <span class="toggle-track" aria-hidden="true"><span class="toggle-knob"></span></span>
+                  <span class="toggle-label">Repetir</span>
+                </button>
+
+                <button id="toggleSound" class="toggle is-on" type="button" aria-pressed="true">
+                  <span class="toggle-track" aria-hidden="true"><span class="toggle-knob"></span></span>
+                  <span class="toggle-label">Som</span>
+                </button>
+              </div>
+            </div>
+
+            <p class="stage-hint">
+              <kbd>Espaço</kbd> para ouvir ou pausar <span aria-hidden="true">•</span> <kbd>←</kbd> <kbd>→</kbd> para navegar
+            </p>
+          </section>
+        </div>
+
+        <aside class="panel seq-panel" aria-labelledby="seqTitle">
+          <div class="seq-head">
+            <div>
+              <h2 id="seqTitle">Sequência</h2>
+              <p id="seqCount">10 contas</p>
+            </div>
+            <span class="seq-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></svg>
+            </span>
+          </div>
+          <div id="sequenceList" class="seq-list"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gameView" class="view" aria-labelledby="gameTitle" hidden>
+      <div class="game-shell">
+        <div id="gameSetup" class="game-card setup-card">
+          <div class="setup-art" aria-hidden="true">
+            <span class="tile tile-1">2</span>
+            <span class="tile tile-2">+</span>
+            <span class="tile tile-3">4</span>
+            <span class="tile tile-4">=</span>
+            <span class="tile tile-5">6</span>
+          </div>
+          <span class="eyebrow">Jogo rápido</span>
+          <h1 id="gameTitle">Mostre o que você aprendeu</h1>
+          <p class="setup-copy">São 10 perguntinhas. Ouça a conta, escolha a resposta certa e tente acertar todas de primeira.</p>
+
+          <p class="game-op-label">Tipo de conta</p>
+          <div id="gameOps" class="op-switch compact" role="group" aria-label="Escolha a operação do jogo">
+            <button class="op-btn is-active" type="button" data-gop="mix" aria-pressed="true">
+              <span class="op-symbol">✦</span>
+              <span class="op-name">Misturado</span>
+            </button>
+            <button class="op-btn" type="button" data-gop="add" aria-pressed="false">
+              <span class="op-symbol">+</span>
+              <span class="op-name">Adição</span>
+            </button>
+            <button class="op-btn" type="button" data-gop="sub" aria-pressed="false">
+              <span class="op-symbol">−</span>
+              <span class="op-name">Subtração</span>
+            </button>
+            <button class="op-btn" type="button" data-gop="mul" aria-pressed="false">
+              <span class="op-symbol">×</span>
+              <span class="op-name">Multiplicação</span>
+            </button>
+            <button class="op-btn" type="button" data-gop="div" aria-pressed="false">
+              <span class="op-symbol">÷</span>
+              <span class="op-name">Divisão</span>
+            </button>
+          </div>
+
+          <button id="btnStartGame" class="play-btn start-btn" type="button" aria-label="Começar o jogo">
+            <span class="play-icon" aria-hidden="true"></span>
+            <span>Começar o jogo</span>
+          </button>
+          <p class="best-line">Seu recorde: <strong id="bestScore">0 de 10</strong></p>
+        </div>
+
+        <div id="gamePlay" class="game-card play-card" hidden>
+          <div class="game-hud">
+            <div class="hud-pill">
+              <span>Acertos</span>
+              <strong id="hudScore">0</strong>
+            </div>
+            <div class="hud-pill">
+              <span>Sequência</span>
+              <strong id="hudStreak">0</strong>
+            </div>
+            <div class="hud-right">
+              <span id="hudCount">1 de 10</span>
+              <button id="btnGameSound" class="icon-btn" type="button" aria-label="Desligar o som" aria-pressed="true">
+                <svg class="icon-sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a8.5 8.5 0 0 1 0 12"/></svg>
+                <svg class="icon-sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+              </button>
+              <button id="btnQuit" class="ghost-btn small" type="button">Sair</button>
+            </div>
+          </div>
+
+          <div id="gameDots" class="game-dots" aria-hidden="true"></div>
+
+          <div class="question-block">
+            <p class="question-kicker">Quanto é?</p>
+            <p id="gameEquation" class="game-equation"></p>
+            <button id="btnRepeatQuestion" class="listen-btn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a8.5 8.5 0 0 1 0 12"/></svg>
+              Ouvir de novo
+            </button>
+          </div>
+
+          <div id="gameOptions" class="answer-grid"></div>
+          <p id="gameFeedback" class="game-feedback" aria-live="polite"></p>
+          <p class="game-hint">Dica: use as teclas <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> para responder</p>
+        </div>
+
+        <div id="gameResults" class="game-card results-card" hidden>
+          <div id="resultStars" class="stars" aria-hidden="true"></div>
+          <h2 id="resultTitle">Muito bem!</h2>
+          <p id="resultScore" class="result-score">7 <span>/ 10</span></p>
+          <p id="resultMessage" class="result-message">Você está pegando o jeito.</p>
+          <div class="result-stats">
+            <span>Melhor sequência <strong id="resultStreak">0</strong></span>
+          </div>
+          <div class="result-actions">
+            <button id="btnReplay" class="play-btn" type="button">
+              <span class="play-icon" aria-hidden="true"></span>
+              <span>Jogar de novo</span>
+            </button>
+            <button id="btnBackLearn" class="ghost-btn" type="button">Voltar a aprender</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="voice-status"><span id="voiceDot" class="voice-dot"></span><span id="voiceStatus">Voz do seu navegador em português</span></span>
+    <span class="footer-note">Aprender ouvindo, um número de cada vez.</span>
+  </footer>
+
+  <div id="liveRegion" class="visually-hidden" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
