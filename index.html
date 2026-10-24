@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR" translate="no">
+<head>
+<meta charset="utf-8" />
+<meta name="google" content="notranslate" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0c0c" />
+<meta name="description" content="Dust Strike — um FPS tático 3D realista para celular, tablet e desktop." />
+<title>DUST STRIKE — 3D Tactical FPS</title>
+<link rel="stylesheet" href="./css/style.css" />
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="game" aria-label="Jogo de tiro 3D"></canvas>
+  <div class="post-fx" aria-hidden="true">
+    <div class="vignette"></div>
+    <div class="lens-dirt"></div>
+  </div>
+
+  <div id="hud" class="hud is-hidden">
+    <div class="hud-top">
+      <div class="objective panel">
+        <div class="panel-kicker"><span class="live-dot"></span> ACTIVE OBJECTIVE</div>
+        <div class="obj-title" id="obj-title">ELIMINATE HOSTILES</div>
+        <div class="obj-meta"><span id="obj-count">0 / 0</span><span id="obj-wave">WAVE 01</span></div>
+        <div class="obj-bar"><i id="obj-bar"></i></div>
+      </div>
+
+      <div class="compass-wrap" id="compass-wrap">
+        <canvas class="compass-canvas" id="compass-canvas"></canvas>
+        <div class="compass-notch"></div>
+        <div class="compass-heading" id="compass-heading">000</div>
+      </div>
+
+      <div class="top-right">
+        <div class="score-panel panel">
+          <div class="score-cell"><span>SCORE</span><strong id="score-val">0</strong></div>
+          <div class="score-cell"><span>KILLS</span><strong id="kills-val">0</strong></div>
+          <div class="score-cell"><span>HEAD</span><strong id="headshots-val">0</strong></div>
+        </div>
+        <div class="minimap-wrap">
+          <canvas id="minimap" width="320" height="320"></canvas>
+          <div class="minimap-ring"></div>
+          <div class="minimap-tag">SECTOR 07</div>
+          <div class="minimap-n">N</div>
+        </div>
+        <div id="killfeed" class="killfeed"></div>
+      </div>
+    </div>
+
+    <div class="crosshair" id="crosshair">
+      <i class="ch top"></i><i class="ch bottom"></i><i class="ch left"></i><i class="ch right"></i><i class="ch dot"></i>
+    </div>
+    <div class="hitmarker" id="hitmarker"><i></i><i></i><i></i><i></i></div>
+    <div class="dmg-arc" id="dmg-arc"></div>
+
+    <div class="vitals panel">
+      <div class="vital-head"><span class="vital-icon">+</span><span id="vitals-state">VITALS STABLE</span></div>
+      <div class="health-row">
+        <div class="health-bar"><i id="health-fill"></i><b></b></div>
+        <strong id="health-val">100</strong>
+      </div>
+      <div class="vital-sub"><span>OPERATOR</span><span>GRID 07-18</span></div>
+    </div>
+
+    <div class="ammo-block">
+      <div class="weapon-tag"><span id="weapon-name">VK-74 CUSTOM</span><span class="dotsep"></span><span>5.56×45</span><span class="dotsep"></span><span class="auto">AUTO</span></div>
+      <div class="ammo-row">
+        <strong id="ammo-mag">30</strong><span class="ammo-slash">/</span><span id="ammo-reserve">120</span>
+      </div>
+      <div class="reload-bar" id="reload-bar"><i id="reload-fill"></i><span>RELOADING</span></div>
+      <div class="ammo-pips" id="ammo-pips"></div>
+    </div>
+
+    <div class="crosshair-hint" id="control-hint">WASD MOVER &nbsp;•&nbsp; MOUSE MIRAR &nbsp;•&nbsp; SHIFT CORRER &nbsp;•&nbsp; R RECARREGAR</div>
+    <div class="banner" id="banner"><div class="banner-line"></div><div class="banner-title" id="banner-title">WAVE 01</div><div class="banner-sub" id="banner-sub">HOSTILES INBOUND</div><div class="banner-line"></div></div>
+
+    <div class="hud-buttons">
+      <button id="btn-pause" class="icon-btn" aria-label="Pause"><span></span><span></span></button>
+      <button id="btn-mute" class="icon-btn sound" aria-label="Mute"><i></i></button>
+    </div>
+  </div>
+
+  <div id="touch-ui" class="touch-ui" aria-hidden="true">
+    <div id="stick" class="stick"><div class="stick-ring"></div><div id="stick-knob" class="stick-knob"></div></div>
+    <div class="touch-right">
+      <button id="btn-jump" class="tbtn small" aria-label="Jump">↑</button>
+      <button id="btn-reload" class="tbtn small" aria-label="Reload">↻</button>
+      <button id="btn-ads" class="tbtn small" aria-label="Aim">ADS</button>
+      <button id="btn-fire" class="tbtn fire" aria-label="Fire"><i></i></button>
+    </div>
+    <div class="touch-hint" id="touch-hint">ARRASTE PARA MIRAR</div>
+  </div>
+
+  <div id="menu" class="screen menu">
+    <div class="menu-bg"></div>
+    <header class="menu-top">
+      <div class="brand"><span class="brand-mark"></span><span>OM / TACTICAL DIVISION</span></div>
+      <div class="menu-status"><span class="live-dot"></span> SIMULAÇÃO ONLINE <span class="sep">/</span> BUILD 3.7.1</div>
+    </header>
+    <main class="menu-main">
+      <section class="menu-left">
+        <div class="eyebrow">3D TACTICAL FPS &nbsp;—&nbsp; PHONE / TABLET / DESKTOP</div>
+        <h1 class="title">DUST<span>STRIKE</span></h1>
+        <div class="title-rule"><i></i><span>OPERATION BLACK SANDS</span><i></i></div>
+        <p class="tagline">Um campo de batalha vivo. Iluminação física, materiais PBR,<br class="wide-only"> som espacial e combate tático em primeira pessoa.</p>
+        <div class="deploy-row">
+          <button id="btn-deploy" class="deploy" aria-label="Play">
+            <span class="deploy-main">DEPLOY</span>
+            <span class="deploy-sub">TOQUE PARA JOGAR</span>
+          </button>
+          <div class="menu-secondary">
+            <button id="btn-menu-mute" class="menu-btn" aria-label="Sound">SOM: ON</button>
+            <div class="quality-note" id="quality-note">QUALIDADE: AUTO</div>
+          </div>
+        </div>
+        <div class="control-cards">
+          <div class="control-card">
+            <span class="cc-label">DESKTOP</span>
+            <p>WASD mover · mouse mirar · LMB atirar · RMB mirar · R recarregar · Shift correr · Espaço saltar</p>
+          </div>
+          <div class="control-card">
+            <span class="cc-label">TOQUE</span>
+            <p>Joystick esquerdo mover · arraste à direita para mirar · botão de fogo · ADS para precisão</p>
+          </div>
+        </div>
+      </section>
+      <aside class="brief panel">
+        <div class="brief-head"><span>MISSION BRIEF</span><span class="brief-code">MSN-07</span></div>
+        <div class="brief-grid">
+          <div><span>LOCAL</span><strong>OUTPOST KILO</strong></div>
+          <div><span>HORA</span><strong>18:42 LOCAL</strong></div>
+          <div><span>INIMIGOS</span><strong>HOSTIS</strong></div>
+          <div><span>ARMA</span><strong>VK-74 CUSTOM</strong></div>
+        </div>
+        <div class="brief-divider"></div>
+        <p class="brief-text">Reconquiste o posto avançado. Limpe o perímetro em ondas, proteja a posição e sobreviva até a extração.</p>
+        <div class="brief-list">
+          <div><i>01</i><span>Elimine as ondas hostis</span></div>
+          <div><i>02</i><span>Use cobertura e mire na cabeça</span></div>
+          <div><i>03</i><span>Gerencie munição e recarregue</span></div>
+        </div>
+        <div class="brief-footer"><span class="live-dot"></span> LINK SATÉLITE ESTÁVEL <span class="brief-signal">▮▮▮▮</span></div>
+      </aside>
+    </main>
+    <footer class="menu-foot">
+      <span>© 2026 TACTICAL DIVISION — TREINAMENTO VIRTUAL</span>
+      <span class="foot-tip">MELHOR EXPERIÊNCIA EM PAISAGEM · USE FONES</span>
+      <span>WEBGL 2 / THREE.JS</span>
+    </footer>
+  </div>
+
+  <div id="pause" class="screen pause is-hidden">
+    <div class="pause-box panel">
+      <div class="panel-kicker">SIMULAÇÃO PAUSADA</div>
+      <h2>TACTICAL HOLD</h2>
+      <p>Respire. Verifique sua munição. O campo não espera.</p>
+      <div class="pause-stats"><span id="pause-kills">0 KILLS</span><span id="pause-score">0 PTS</span></div>
+      <button id="btn-resume" class="deploy small"><span class="deploy-main">RESUME</span><span class="deploy-sub">VOLTAR AO COMBATE</span></button>
+      <div class="pause-links"><button id="btn-restart" class="link-btn">REINICIAR MISSÃO</button><button id="btn-pause-mute" class="link-btn">SOM: ON</button></div>
+    </div>
+  </div>
+
+  <div id="end" class="screen end is-hidden">
+    <div class="end-box panel">
+      <div class="panel-kicker" id="end-kicker">OPERATOR STATUS</div>
+      <h2 id="end-title">MISSION COMPLETE</h2>
+      <p id="end-sub">Perímetro seguro. Extração autorizada.</p>
+      <div class="end-stats">
+        <div><strong id="end-score">0</strong><span>SCORE</span></div>
+        <div><strong id="end-kills">0</strong><span>KILLS</span></div>
+        <div><strong id="end-heads">0</strong><span>HEADSHOTS</span></div>
+        <div><strong id="end-acc">0%</strong><span>ACCURACY</span></div>
+      </div>
+      <button id="btn-redeploy" class="deploy"><span class="deploy-main">REDEPLOY</span><span class="deploy-sub">NOVA MISSÃO</span></button>
+      <div class="end-foot">DUST STRIKE // OUTPOST KILO</div>
+    </div>
+  </div>
+
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-mark"><i></i><i></i><i></i></div>
+      <div class="loader-title">DUST <span>STRIKE</span></div>
+      <div class="loader-sub"><span id="loader-status">INICIALIZANDO MOTOR 3D</span><span id="loader-pct">0%</span></div>
+      <div class="loader-bar"><i id="loader-fill"></i></div>
+      <div class="loader-fine">PBR MATERIALS · DYNAMIC LIGHTING · SPATIAL AUDIO</div>
+    </div>
+  </div>
+
+  <div id="rotate-hint" class="rotate-hint">GIRE O DISPOSITIVO PARA UMA EXPERIÊNCIA COMPLETA</div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
