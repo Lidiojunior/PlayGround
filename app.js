@@ -161,6 +161,7 @@
     }
 
     const { symbol, spoken } = OPS[op];
+    const naturalSentence = `${numberToWords(a)} ${spoken} ${numberToWords(b)}, ${numberToWords(result)}`;
     return {
       op,
       table,
@@ -169,7 +170,8 @@
       result,
       symbol,
       display: `${a} ${symbol} ${b} = ${result}`,
-      sentence: `${numberToWords(a)} ${spoken} ${numberToWords(b)} é igual a ${numberToWords(result)}`,
+      sentence: naturalSentence,
+      speech: `${naturalSentence}.`,
       question: `Quanto é ${numberToWords(a)} ${spoken} ${numberToWords(b)}?`,
     };
   }
@@ -263,7 +265,7 @@
   }
 
   function speak(text, options = {}) {
-    const rate = clamp((options.rate || 1) * 0.95, 0.55, 1.65);
+    const rate = clamp(options.rate || 1, 0.6, 1.6);
     const fallbackMs = options.fallbackMs || 1800;
     const onDone = options.onDone || null;
     const token = speechToken + 1;
@@ -297,7 +299,7 @@
       const utterance = new window.SpeechSynthesisUtterance(text);
       utterance.lang = 'pt-BR';
       utterance.rate = rate;
-      utterance.pitch = 1.03;
+      utterance.pitch = 1;
       utterance.volume = 1;
       if (selectedVoice) utterance.voice = selectedVoice;
       utterance.onend = finish;
@@ -320,6 +322,23 @@
     }
   }
 
+  function pickPortugueseVoice(voices) {
+    const portuguese = voices.filter((voice) => /^pt([-_]br)?/i.test(voice.lang || ''));
+    if (!portuguese.length) return null;
+
+    const score = (voice) => {
+      let points = 0;
+      if (/^pt[-_]br/i.test(voice.lang)) points += 20;
+      if (/natural|neural/i.test(voice.name)) points += 12;
+      if (/google/i.test(voice.name)) points += 8;
+      if (/francisca|luciana|daniel|maria|helena|joana|thiago|ricardo|antonio/i.test(voice.name)) points += 4;
+      if (!voice.localService) points += 6;
+      return points;
+    };
+
+    return portuguese.slice().sort((a, b) => score(b) - score(a))[0];
+  }
+
   function refreshVoices() {
     if (!speechSupported) {
       els.voiceDot.classList.remove('is-ready');
@@ -332,13 +351,13 @@
     } catch {
       voices = [];
     }
-    selectedVoice = voices.find((voice) => /^pt[-_]br/i.test(voice.lang))
-      || voices.find((voice) => /^pt/i.test(voice.lang))
-      || null;
+    selectedVoice = pickPortugueseVoice(voices);
 
     if (selectedVoice) {
       els.voiceDot.classList.add('is-ready');
-      els.voiceStatus.textContent = 'Voz em português pronta';
+      els.voiceStatus.textContent = /natural|neural/i.test(selectedVoice.name)
+        ? 'Voz natural em português'
+        : 'Voz em português pronta';
     } else if (voices.length) {
       els.voiceDot.classList.remove('is-ready');
       els.voiceStatus.textContent = 'Usando a voz padrão do navegador';
@@ -597,7 +616,7 @@
     const token = ++playToken;
     renderCurrent();
 
-    speak(item.sentence, {
+    speak(item.speech, {
       rate: state.speed,
       fallbackMs: Math.round(1800 / state.speed),
       onDone: () => {
@@ -824,8 +843,8 @@
     stopSpeech();
     speak(
       correct
-        ? `Isso mesmo! ${question.sentence}.`
-        : `Quase! A resposta certa é ${numberToWords(question.result)}. ${question.sentence}.`,
+        ? `Isso mesmo! ${question.speech}`
+        : `Quase! A resposta certa é ${numberToWords(question.result)}. ${question.speech}`,
       { rate: state.speed, fallbackMs: 1500 },
     );
 
