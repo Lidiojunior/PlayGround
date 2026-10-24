@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PLAYBACKS — Acervo musical para seus eventos</title>
+  <meta name="description" content="Playbacks de sertanejo, forró, arrocha, rock, MPB, axé e gospel organizados em coleções prontas para abrir no Google Drive.">
+  <meta name="theme-color" content="#0a0b0e">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%230a0b0e'/><path d='M16 40V24M26 46V18M36 38V26M46 44V20' stroke='%23ff6b35' stroke-width='5' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#acervo">Ir para o acervo</a>
+
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.6 9.7l5.8-.8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-drive" viewBox="0 0 24 24"><path d="m9.2 4.5-6 10.4 3 5.1 6-10.4-3-5.1Zm5.6 0-6 10.4h6l3-5.2-3-5.2Zm-8.6 17h12l3-5.2H9.2L6.2 21.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.8c.7 4.6 2.6 6.5 7.2 7.2-4.6.7-6.5 2.6-7.2 7.2-.7-4.6-2.6-6.5-7.2-7.2 4.6-.7 6.5-2.6 7.2-7.2Z" fill="currentColor"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="PLAYBACKS, início">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="brand-name">PLAYBACKS<small>acervo musical</small></span>
+    </a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#acervo">Acervo</a>
+      <a href="#estilos">Estilos</a>
+      <a href="#como-funciona">Como funciona</a>
+    </nav>
+    <a class="btn btn-ghost header-cta" href="https://drive.google.com/drive/folders/1eVzisDcXoQPeK8UN83jPQtZQnJP5jSco" target="_blank" rel="noopener">
+      <svg class="icon" aria-hidden="true"><use href="#i-drive"/></svg>
+      Abrir Drive
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> Atualizado para 2026</p>
+        <h1 id="hero-title">Todo o seu repertório, <em>em um só lugar.</em></h1>
+        <p class="lede">Playbacks de sertanejo, forró, arrocha, rock, MPB e muito mais. Coleções organizadas por estilo, direto do Google Drive para o seu evento.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#acervo">Explorar coleções <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <button class="btn btn-secondary" id="shuffle" type="button">Coleção aleatória</button>
+        </div>
+        <dl class="stats">
+          <div><dt>Coleções</dt><dd><span data-stat="collections">21</span></dd></div>
+          <div><dt>Estilos</dt><dd><span data-stat="genres">10</span></dd></div>
+          <div><dt>Acesso</dt><dd>Livre</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="vinyl-glow"></div>
+        <div class="vinyl">
+          <div class="vinyl-grooves"></div>
+          <div class="vinyl-label">
+            <span class="vinyl-mark"><i></i><i></i><i></i></span>
+            <strong>PLAYBACKS</strong>
+            <small>coleção 2026</small>
+          </div>
+        </div>
+        <div class="player">
+          <div class="player-top"><span class="player-live"><i></i> Ao vivo</span><span>do acervo</span></div>
+          <div class="equalizer" aria-hidden="true"></div>
+          <div class="player-meta">
+            <div><strong>Sertanejo &amp; Forró</strong><span>coleção em destaque</span></div>
+            <span class="player-count">21</span>
+          </div>
+        </div>
+        <span class="float-tag float-a">Forró pé de serra</span>
+        <span class="float-tag float-b">Rock nacional</span>
+      </div>
+    </section>
+
+    <section class="acervo" id="acervo" aria-labelledby="acervo-title">
+      <div class="section-head">
+        <div>
+          <p class="kicker">O acervo</p>
+          <h2 id="acervo-title">Escolha o som do seu evento</h2>
+        </div>
+        <p class="section-note" id="result-count" aria-live="polite">21 coleções</p>
+      </div>
+
+      <div class="toolbar">
+        <label class="search">
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="search" type="search" placeholder="Buscar por gênero ou coleção..." autocomplete="off" aria-label="Buscar coleções">
+          <kbd>/</kbd>
+        </label>
+        <div class="chips" id="chips" role="group" aria-label="Filtrar por estilo"></div>
+      </div>
+
+      <div class="grid" id="collection-grid" role="list"></div>
+      <div class="empty" id="empty" hidden>
+        <span class="empty-mark" aria-hidden="true"><svg class="icon"><use href="#i-spark"/></svg></span>
+        <h3>Nada por aqui ainda</h3>
+        <p>Tente outro estilo, limpe a busca ou favorite uma coleção para encontrá-la depois.</p>
+        <button class="btn btn-secondary" id="reset-filters" type="button">Limpar filtros</button>
+      </div>
+    </section>
+
+    <section class="estilos" id="estilos" aria-labelledby="estilos-title">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Por estilo</p>
+          <h2 id="estilos-title">Uma coleção para cada clima</h2>
+        </div>
+        <p class="section-note">Toque em um estilo para filtrar o acervo.</p>
+      </div>
+      <div class="genre-grid" id="genre-grid"></div>
+    </section>
+
+    <section class="how" id="como-funciona" aria-labelledby="how-title">
+      <div class="how-copy">
+        <p class="kicker">Simples assim</p>
+        <h2 id="how-title">Do Drive para a sua apresentação</h2>
+        <p>Sem cadastro, sem instalação. Escolha uma coleção, abra a pasta compartilhada e baixe apenas o que precisa para o seu set.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <span class="step-number">01</span>
+          <h3>Encontre o estilo</h3>
+          <p>Filtre por gênero ou busque pelo nome da coleção.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <h3>Abra no Drive</h3>
+          <p>Cada cartão leva direto à pasta compartilhada no Google Drive.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <h3>Monte o repertório</h3>
+          <p>Navegue pelas subpastas e baixe os playbacks do seu show.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div>
+        <p class="kicker">Tudo pronto</p>
+        <h2 id="cta-title">O próximo show começa com a coleção certa.</h2>
+        <p>Explore as 21 pastas do acervo e encontre o repertório ideal para o seu público.</p>
+      </div>
+      <a class="btn btn-primary btn-large" href="https://drive.google.com/drive/folders/1eVzisDcXoQPeK8UN83jPQtZQnJP5jSco" target="_blank" rel="noopener">
+        <svg class="icon" aria-hidden="true"><use href="#i-drive"/></svg>
+        Abrir acervo no Drive
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span>PLAYBACKS</span>
+    </div>
+    <p>Acervo de playbacks organizado por estilo. Conteúdo hospedado no Google Drive.</p>
+    <a href="https://drive.google.com/drive/folders/1eVzisDcXoQPeK8UN83jPQtZQnJP5jSco" target="_blank" rel="noopener">Pasta principal <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </footer>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
