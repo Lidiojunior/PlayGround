@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#080b10" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="description"
+      content="OPERADOR: Zona Morta — FPS 3D realista para celular e tablet. Sobreviva a ondas inimigas em um campo de batalha noturno."
+    />
+    <title>OPERADOR — Zona Morta</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23070b10'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23c8f05a' stroke-width='4'/%3E%3Cpath d='M32 8v13M32 43v13M8 32h13M43 32h13' stroke='%23c8f05a' stroke-width='4'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/index-Bb27opYy.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D36ZXWeD.css">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game" aria-label="Jogo de tiro 3D em primeira pessoa"></canvas>
+
+      <div id="grade"></div>
+      <div id="vignette"></div>
+      <div id="grain"></div>
+      <div id="damage-flash"></div>
+      <div id="fade"></div>
+
+      <div id="hud" class="is-hidden">
+        <div class="hud-top">
+          <div id="vitals">
+            <div class="vital-head">
+              <span class="vital-icon">+</span>
+              <span class="vital-label">SINAIS VITAIS</span>
+              <span id="health-val">100</span>
+            </div>
+            <div class="vital-bar"><i id="health-fill"></i></div>
+            <div class="vital-status"><i id="health-pulse"></i><span id="health-status">ESTÁVEL</span></div>
+          </div>
+
+          <div id="compass-wrap">
+            <div id="compass">
+              <div id="compass-strip"></div>
+              <div class="compass-marker"></div>
+            </div>
+            <div id="wave-info">
+              <span id="wave-label">ONDA 1</span>
+              <span class="sep"></span>
+              <span id="enemy-count"><b>0</b> HOSTIS</span>
+            </div>
+          </div>
+
+          <div class="hud-right">
+            <div class="right-actions">
+              <button id="btn-sound" class="icon-btn" aria-label="Alternar som">
+                <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" /><path class="wave" d="M16 8.5a5 5 0 0 1 0 7" /><path class="wave" d="M18.5 6a8.5 8.5 0 0 1 0 12" /></svg>
+              </button>
+              <button id="btn-pause" class="icon-btn" aria-label="Pausar">
+                <svg viewBox="0 0 24 24"><rect x="7" y="5" width="3.6" height="14" rx="1" /><rect x="13.4" y="5" width="3.6" height="14" rx="1" /></svg>
+              </button>
+            </div>
+            <div id="stats">
+              <div><b id="score">0</b><span>PONTOS</span></div>
+              <div><b id="kills">0</b><span>ABATES</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="crosshair">
+          <i class="ch ch-t"></i><i class="ch ch-b"></i><i class="ch ch-l"></i><i class="ch ch-r"></i>
+          <i class="ch-dot"></i>
+          <div id="hitmarker"><i></i><i></i><i></i><i></i></div>
+          <div id="damage-arc"></div>
+        </div>
+
+        <div id="reload-hint">
+          <span>TROCANDO CARREGADOR</span>
+          <div class="reload-bar"><i id="reload-fill"></i></div>
+        </div>
+
+        <div id="killfeed"></div>
+
+        <div id="banner">
+          <div id="banner-title"></div>
+          <div id="banner-sub"></div>
+        </div>
+
+        <div id="ammo">
+          <div class="ammo-main">
+            <span id="ammo-mag">30</span>
+            <span class="ammo-slash">/</span>
+            <span id="ammo-reserve">120</span>
+          </div>
+          <div class="ammo-meta">
+            <span id="weapon-name">MK-7</span>
+            <span id="fire-mode">AUTO</span>
+          </div>
+        </div>
+
+        <div id="objective">
+          <span class="obj-dot"></span>
+          <span id="objective-text">DEFENDA O PERÍMETRO</span>
+        </div>
+
+        <div id="joystick" class="is-hidden">
+          <div class="js-ring"></div>
+          <div class="js-knob" id="js-knob"></div>
+        </div>
+
+        <div id="touch-controls">
+          <button id="btn-fire" class="ctl fire" aria-label="Atirar">
+            <span class="ctl-glow"></span>
+            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="9" /><path d="M24 4v9M24 35v9M4 24h9M35 24h9" /><circle cx="24" cy="24" r="2.4" class="solid" /></svg>
+            <span class="ctl-label">FOGO</span>
+          </button>
+          <button id="btn-aim" class="ctl aim" aria-label="Mirar">
+            <svg viewBox="0 0 48 48"><path d="M17 6H9a3 3 0 0 0-3 3v8M31 6h8a3 3 0 0 1 3 3v8M17 42H9a3 3 0 0 1-3-3v-8M31 42h8a3 3 0 0 0 3-3v-8" /><circle cx="24" cy="24" r="6" /><circle cx="24" cy="24" r="1.6" class="solid" /></svg>
+            <span class="ctl-label">MIRAR</span>
+          </button>
+          <button id="btn-reload" class="ctl reload" aria-label="Recarregar">
+            <svg viewBox="0 0 48 48"><path d="M38 24a14 14 0 1 1-4.1-9.9" /><path d="M39 8v8h-8" /></svg>
+            <span class="ctl-label">RECARGA</span>
+          </button>
+        </div>
+
+        <div id="look-hint">ARRASTE O LADO DIREITO PARA OLHAR</div>
+      </div>
+
+      <div id="screen-menu" class="screen">
+        <div class="menu-shade"></div>
+        <div class="menu-content">
+          <div class="eyebrow"><span class="line"></span>SIMULAÇÃO DE COMBATE TÁTICO</div>
+          <h1>OPERADOR</h1>
+          <div class="subtitle">ZONA MORTA</div>
+          <p class="tagline">
+            Você é a última linha de defesa. Segure o perímetro contra ondas hostis
+            em um campo de batalha noturno renderizado em 3D.
+          </p>
+          <button id="btn-start" class="btn-primary">
+            <span>INICIAR MISSÃO</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+          <div class="control-chips touch-only">
+            <div class="chip"><b>JOYSTICK</b><span>mover</span></div>
+            <div class="chip"><b>ARRASTAR</b><span>olhar</span></div>
+            <div class="chip"><b>FOGO</b><span>atirar</span></div>
+            <div class="chip"><b>MIRAR</b><span>precisão</span></div>
+          </div>
+          <div class="control-chips mouse-only">
+            <div class="chip"><b>W A S D</b><span>mover</span></div>
+            <div class="chip"><b>MOUSE</b><span>olhar</span></div>
+            <div class="chip"><b>CLIQUE</b><span>atirar</span></div>
+            <div class="chip"><b>R / DIR.</b><span>recarregar / mirar</span></div>
+          </div>
+          <div class="menu-foot">
+            <span>MELHOR EM PAISAGEM</span><i></i><span>FONES RECOMENDADOS</span><i></i><span>MIRA ASSISTIDA</span>
+          </div>
+        </div>
+        <div class="menu-version">BUILD 1.0 • OPERAÇÃO NOTURNA</div>
+      </div>
+
+      <div id="screen-pause" class="screen is-hidden">
+        <div class="panel">
+          <div class="panel-eyebrow">SISTEMA</div>
+          <h2>PAUSADO</h2>
+          <p class="panel-sub">A operação está congelada. Retome quando estiver pronto.</p>
+          <div class="panel-stats">
+            <div><b id="pause-kills">0</b><span>ABATES</span></div>
+            <div><b id="pause-wave">1</b><span>ONDA</span></div>
+            <div><b id="pause-score">0</b><span>PONTOS</span></div>
+          </div>
+          <button id="btn-resume" class="btn-primary"><span>CONTINUAR</span></button>
+          <div class="panel-row">
+            <button id="btn-restart" class="btn-ghost">REINICIAR</button>
+            <button id="btn-sound-pause" class="btn-ghost">SOM: LIGADO</button>
+            <button id="btn-menu" class="btn-ghost">MENU</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="screen-dead" class="screen is-hidden">
+        <div class="panel dead-panel">
+          <div class="panel-eyebrow danger">MISSÃO ENCERRADA</div>
+          <h2>VOCÊ CAIU</h2>
+          <p class="panel-sub">O perímetro foi comprometido. Reagrupe e tente novamente.</p>
+          <div class="panel-stats">
+            <div><b id="dead-wave">1</b><span>ONDA</span></div>
+            <div><b id="dead-kills">0</b><span>ABATES</span></div>
+            <div><b id="dead-accuracy">0%</b><span>PRECISÃO</span></div>
+            <div><b id="dead-score">0</b><span>PONTOS</span></div>
+          </div>
+          <button id="btn-retry" class="btn-primary"><span>TENTAR NOVAMENTE</span></button>
+          <button id="btn-dead-menu" class="btn-ghost wide">VOLTAR AO MENU</button>
+        </div>
+      </div>
+
+      <div id="rotate-hint">
+        <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M3 8a10 10 0 0 1 4-5M21 16a10 10 0 0 1-4 5" /></svg>
+        GIRE PARA PAISAGEM
+      </div>
+
+      <div id="loader">
+        <div class="loader-brand">OPERADOR</div>
+        <div class="loader-bar"><i></i></div>
+        <div class="loader-text">PREPARANDO CAMPO DE BATALHA</div>
+      </div>
+    </div>
+
+  </body>
+</html>
