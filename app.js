@@ -865,7 +865,7 @@
     if (score >= 8) return { title: 'Muito bem!', message: 'Quase perfeito. Você está dominando essas contas.' };
     if (score >= 6) return { title: 'Bom trabalho!', message: 'Você está no caminho certo. Ouça mais uma vez e tente superar.' };
     if (score >= 3) return { title: 'Continue treinando!', message: 'Cada tentativa ensina um pouquinho. Ouça a tabuada com calma e jogue de novo.' };
-    return { title: 'Vamos treinar mais!', message: 'Sem pressa. Ouça a tabuada falante e volte quando quiser.' };
+    return { title: 'Vamos treinar mais!', message: 'Sem pressa. Ouça a tabuada inteligente e volte quando quiser.' };
   }
 
   function showResults() {

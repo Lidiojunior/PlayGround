@@ -1902,6 +1902,17 @@ kbd {
   }
 }
 
+@media (max-width: 370px) {
+  .brand-text strong {
+    font-size: 1.1rem;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
