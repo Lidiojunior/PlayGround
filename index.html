@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0812">
+  <meta name="description" content="Gerador de jogos da Lotofácil: fixe dezenas, elimine números, use perfis estatísticos e gere até 300 jogos de 15 dezenas.">
+  <title>Lotofácil Lab — Gerador de jogos 15/25</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%239333ea'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='monospace' font-size='24' font-weight='700' fill='white'%3E15%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Lotofácil Lab, início">
+      <span class="brand-mark">15<span>/</span>25</span>
+      <span class="brand-text">
+        <strong>Lotofácil Lab</strong>
+        <small>gerador de jogos</small>
+      </span>
+    </a>
+    <div class="topbar-right">
+      <span id="data-status" class="data-pill">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="data-status-text">Base local</span>
+      </span>
+      <button id="refresh-data" class="btn ghost small" type="button">Atualizar resultados</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">15 dezenas · 1 a 25</p>
+        <h1>Monte seus jogos com <span>controle total</span>.</h1>
+        <p class="lede">Fixe as dezenas que você quer, elimine as que não quer, escolha um perfil estatístico e gere até 300 jogos em segundos.</p>
+      </div>
+
+      <aside class="latest-card" aria-labelledby="latest-title">
+        <div class="latest-top">
+          <p id="latest-title">Último concurso</p>
+          <strong id="latest-concurso">—</strong>
+        </div>
+        <div id="latest-balls" class="mini-balls" aria-label="Dezenas sorteadas no último concurso"></div>
+        <p id="latest-meta" class="latest-meta">Carregando base de resultados…</p>
+      </aside>
+    </section>
+
+    <div class="layout">
+      <aside class="controls panel" aria-label="Configuração dos jogos">
+        <section class="control-block">
+          <div class="block-head">
+            <h2>Painel de dezenas</h2>
+            <button id="clear-marks" class="link" type="button">Limpar</button>
+          </div>
+          <p class="hint">Clique para alternar: <span class="tag tag-fixed">fixar</span> → <span class="tag tag-excluded">matar</span> → livre. O % é a frequência nos últimos 100 concursos.</p>
+          <div id="number-grid" class="number-grid" role="group" aria-label="Dezenas de 1 a 25"></div>
+          <div id="marks-summary" class="marks-summary" aria-live="polite"></div>
+        </section>
+
+        <section class="control-block">
+          <h2>Configuração</h2>
+
+          <label class="field" for="game-count">
+            <span class="field-label">Quantidade de jogos <em id="count-value">10</em></span>
+            <input id="game-count" type="range" min="1" max="300" step="1" value="10">
+          </label>
+          <div class="presets" role="group" aria-label="Quantidades rápidas">
+            <button type="button" data-count="10">10</button>
+            <button type="button" data-count="30">30</button>
+            <button type="button" data-count="100">100</button>
+            <button type="button" data-count="300">300</button>
+          </div>
+
+          <label class="field" for="profile">
+            <span class="field-label">Perfil dos jogos</span>
+            <select id="profile">
+              <option value="aleatorio">Aleatório — sem filtros</option>
+              <option value="equilibrado" selected>Equilibrado — recomendado</option>
+              <option value="conservador">Conservador — filtros rígidos</option>
+            </select>
+          </label>
+
+          <label class="field" for="weight-mode">
+            <span class="field-label">Peso estatístico</span>
+            <select id="weight-mode">
+              <option value="neutro" selected>Neutro — todas iguais</option>
+              <option value="quentes">Quentes — mais sorteadas</option>
+              <option value="frios">Frias — menos sorteadas</option>
+              <option value="atrasadas">Atrasadas — maior atraso</option>
+            </select>
+          </label>
+
+          <label class="field field-inline" for="price">
+            <span class="field-label">Valor por jogo (R$)</span>
+            <input id="price" type="number" min="0" step="0.50" value="3.50" inputmode="decimal">
+          </label>
+
+          <button id="generate" class="btn primary big" type="button">
+            <span>Gerar jogos</span>
+            <kbd>G</kbd>
+          </button>
+          <p class="microcopy">Sorteios da Lotofácil são independentes. O peso estatístico é opcional e não aumenta a chance de prêmio.</p>
+        </section>
+      </aside>
+
+      <section class="results" aria-labelledby="results-title">
+        <div class="stats-grid">
+          <article class="stat">
+            <span>Jogos gerados</span>
+            <strong id="stat-games">0</strong>
+            <small id="stat-games-note">aguardando geração</small>
+          </article>
+          <article class="stat">
+            <span>Fixadas</span>
+            <strong id="stat-fixed">0</strong>
+            <small id="stat-fixed-note">nenhuma dezena</small>
+          </article>
+          <article class="stat">
+            <span>Eliminadas</span>
+            <strong id="stat-excluded">0</strong>
+            <small id="stat-excluded-note">nenhuma dezena</small>
+          </article>
+          <article class="stat stat-cost">
+            <span>Custo estimado</span>
+            <strong id="stat-cost">R$ 0,00</strong>
+            <small id="stat-cost-note">ajuste o valor unitário</small>
+          </article>
+        </div>
+
+        <section id="radar" class="radar panel-soft" aria-labelledby="radar-title">
+          <div class="radar-head">
+            <div>
+              <h2 id="radar-title">Radar estatístico</h2>
+              <p id="radar-base">Base local · últimos 100 concursos</p>
+            </div>
+            <span class="radar-badge">opcional</span>
+          </div>
+          <div class="radar-lists">
+            <div class="radar-group">
+              <span>Mais quentes</span>
+              <div id="hot-list" class="chip-row"></div>
+            </div>
+            <div class="radar-group">
+              <span>Mais frias</span>
+              <div id="cold-list" class="chip-row"></div>
+            </div>
+            <div class="radar-group">
+              <span>Mais atrasadas</span>
+              <div id="delay-list" class="chip-row"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="results-toolbar">
+          <div>
+            <h2 id="results-title">Seus jogos</h2>
+            <p id="results-sub">Clique em gerar para montar sua lista.</p>
+          </div>
+          <div class="toolbar-actions">
+            <label class="check" for="compare-latest">
+              <input id="compare-latest" type="checkbox" checked>
+              <span>Conferir com o último concurso</span>
+            </label>
+            <button id="copy-all" class="btn ghost small" type="button">Copiar</button>
+            <button id="download-csv" class="btn ghost small" type="button">CSV</button>
+            <button id="download-txt" class="btn ghost small" type="button">TXT</button>
+          </div>
+        </div>
+
+        <div id="games" class="games" aria-live="polite"></div>
+
+        <div id="empty-state" class="empty-state">
+          <span class="empty-icon" aria-hidden="true">15</span>
+          <h3>Nenhum jogo ainda</h3>
+          <p>Escolha suas dezenas e clique em <strong>Gerar jogos</strong>.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><strong>Jogue com responsabilidade.</strong> A Lotofácil é um sorteio aleatório: nenhum método, padrão ou estatística garante prêmio. Proibido para menores de 18 anos. Valores de referência: R$ 3,50 por jogo de 15 dezenas — confirme na Caixa antes de apostar. Resultados históricos via API pública Loterias Caixa.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
