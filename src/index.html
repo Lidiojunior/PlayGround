@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#070b12" />
+  <meta name="description" content="Lidiolbet: Tigrinho, Aviador, Coelho de Bomba e outros jogos de demonstração com moedas virtuais." />
+  <title>Lidiolbet — Tigrinho, Aviador e Coelho de Bomba</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%AF%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="orb orb-a" aria-hidden="true"></div>
+  <div class="orb orb-b" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Lidiolbet, página inicial">
+      <span class="brand-mark" aria-hidden="true">🐯</span>
+      <span class="brand-word">LIDIO<span>LBET</span></span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a class="is-active" href="#inicio">Início</a>
+      <a href="#jogos">Jogos</a>
+      <a href="#vantagens">Vantagens</a>
+      <a href="#ajuda">Ajuda</a>
+    </nav>
+
+    <div class="top-actions">
+      <div class="wallet" title="Saldo de demonstração">
+        <span class="wallet-coin" aria-hidden="true">●</span>
+        <span class="wallet-label">Saldo demo</span>
+        <strong id="balance">R$ 1.000,00</strong>
+      </div>
+      <button class="ghost-btn" type="button" id="loginBtn">Entrar</button>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="pulse"></span> Plataforma 100% demo · moedas virtuais</span>
+        <h1>A emoção dos grandes jogos.<br /><span class="grad">Sem apostar dinheiro real.</span></h1>
+        <p class="hero-text">
+          Tigrinho, Aviador, Coelho de Bomba e muito mais em uma experiência
+          rápida, colorida e feita para jogar no navegador. Comece com
+          R$ 1.000 em moedas de demonstração.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn" type="button" data-open-game="tigrinho">
+            <span aria-hidden="true">▶</span> Jogar Tigrinho
+          </button>
+          <a class="secondary-btn" href="#jogos">Explorar jogos</a>
+        </div>
+        <ul class="hero-points" aria-label="Destaques">
+          <li><span aria-hidden="true">⚡</span> Instantâneo</li>
+          <li><span aria-hidden="true">🛡️</span> Sem depósito</li>
+          <li><span aria-hidden="true">📱</span> No celular e PC</li>
+        </ul>
+      </div>
+
+      <div class="hero-stage" aria-hidden="true">
+        <div class="jackpot-chip">
+          <span>Prêmio do dia</span>
+          <strong>R$ 48.920</strong>
+        </div>
+        <div class="tiger-card">
+          <div class="tiger-glow"></div>
+          <div class="tiger-emoji">🐯</div>
+          <div class="reel-strip">
+            <span>💰</span><span class="gold">🐯</span><span>🍀</span>
+          </div>
+          <div class="tiger-card-foot">
+            <span>Tigrinho da Sorte</span>
+            <span class="live-dot">AO VIVO</span>
+          </div>
+        </div>
+        <div class="float-coin coin-1">R$</div>
+        <div class="float-coin coin-2">★</div>
+        <div class="float-coin coin-3">🍀</div>
+      </div>
+    </section>
+
+    <section class="games-section" id="jogos">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow small">Escolha seu favorito</span>
+          <h2>Jogos em destaque</h2>
+        </div>
+        <div class="filters" role="group" aria-label="Filtrar jogos">
+          <button class="filter is-active" type="button" data-filter="todos">Todos</button>
+          <button class="filter" type="button" data-filter="slots">Slots</button>
+          <button class="filter" type="button" data-filter="crash">Crash</button>
+          <button class="filter" type="button" data-filter="mesa">Mesa</button>
+        </div>
+      </div>
+
+      <div class="game-grid">
+        <article class="game-card tigrinho" data-kind="slots">
+          <span class="card-tag hot">Em alta</span>
+          <div class="card-art"><span class="art-emoji">🐯</span><span class="art-coin">💰</span></div>
+          <div class="card-body">
+            <div>
+              <h3>Tigrinho</h3>
+              <p>Slot 3×3 · até 25×</p>
+            </div>
+            <button class="play-btn" type="button" data-open-game="tigrinho" aria-label="Play Tigrinho"><span aria-hidden="true">▶</span></button>
+          </div>
+        </article>
+
+        <article class="game-card aviator" data-kind="crash">
+          <span class="card-tag">Multiplicador</span>
+          <div class="card-art"><span class="art-emoji">✈️</span><span class="art-coin">📈</span></div>
+          <div class="card-body">
+            <div>
+              <h3>Aviador</h3>
+              <p>Voe alto e saque antes</p>
+            </div>
+            <button class="play-btn" type="button" data-open-game="aviador" aria-label="Play Aviador"><span aria-hidden="true">▶</span></button>
+          </div>
+        </article>
+
+        <article class="game-card coelho" data-kind="slots">
+          <span class="card-tag new">Novo</span>
+          <div class="card-art"><span class="art-emoji">🐰</span><span class="art-coin">💣</span></div>
+          <div class="card-body">
+            <div>
+              <h3>Coelho de Bomba</h3>
+              <p>Escolha cenouras e fuja</p>
+            </div>
+            <button class="play-btn" type="button" data-open-game="coelho" aria-label="Play Coelho de Bomba"><span aria-hidden="true">▶</span></button>
+          </div>
+        </article>
+
+        <article class="game-card roleta" data-kind="mesa">
+          <span class="card-tag">Clássico</span>
+          <div class="card-art"><span class="art-emoji">🎡</span><span class="art-coin">✨</span></div>
+          <div class="card-body">
+            <div>
+              <h3>Roleta da Sorte</h3>
+              <p>Gire e multiplique</p>
+            </div>
+            <button class="play-btn" type="button" data-open-game="roleta" aria-label="Play Roleta da Sorte"><span aria-hidden="true">▶</span></button>
+          </div>
+        </article>
+
+        <article class="game-card dados" data-kind="mesa">
+          <span class="card-tag">Rápido</span>
+          <div class="card-art"><span class="art-emoji">🎲</span><span class="art-coin">🎯</span></div>
+          <div class="card-body">
+            <div>
+              <h3>Dados da Sorte</h3>
+              <p>Acerte a soma dos dados</p>
+            </div>
+            <button class="play-btn" type="button" data-open-game="dados" aria-label="Play Dados da Sorte"><span aria-hidden="true">▶</span></button>
+          </div>
+        </article>
+
+        <article class="game-card mines" data-kind="crash">
+          <span class="card-tag">Estratégia</span>
+          <div class="card-art"><span class="art-emoji">💎</span><span class="art-coin">💥</span></div>
+          <div class="card-body">
+            <div>
+              <h3>Minas Premiadas</h3>
+              <p>Colete e saia em segurança</p>
+            </div>
+            <button class="play-btn" type="button" data-open-game="mines" aria-label="Play Minas Premiadas"><span aria-hidden="true">▶</span></button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="benefits" id="vantagens">
+      <div class="benefit">
+        <span class="benefit-icon">🚀</span>
+        <div><h3>Comece na hora</h3><p>Sem cadastro, sem depósito. Abra um jogo e jogue.</p></div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">🪙</span>
+        <div><h3>Moedas virtuais</h3><p>R$ 1.000 de demonstração para testar todos os jogos.</p></div>
+      </div>
+      <div class="benefit">
+        <span class="benefit-icon">🔒</span>
+        <div><h3>Ambiente seguro</h3><p>Aqui nada vale dinheiro real. É só diversão.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="ajuda">
+    <div class="footer-brand"><span aria-hidden="true">🐯</span> LIDIOLBET</div>
+    <p>Jogos de demonstração com moedas virtuais. Proibido para menores de 18 anos. Jogue com responsabilidade.</p>
+    <p class="footer-small">Este site não envolve apostas, pagamentos ou prêmios reais.</p>
+  </footer>
+
+  <div class="modal" id="gameModal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+      <header class="modal-head">
+        <div>
+          <span class="eyebrow small">Modo demonstração</span>
+          <h2 id="gameTitle">Jogo</h2>
+        </div>
+        <button class="close-btn" type="button" data-close-modal aria-label="Fechar jogo">×</button>
+      </header>
+      <div class="modal-balance">
+        <span>Saldo demo</span>
+        <strong id="modalBalance">R$ 1.000,00</strong>
+      </div>
+      <div id="gameArea" class="game-area"></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
