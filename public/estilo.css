@@ -1,0 +1,86 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.container { width: 100%; max-width: 720px; }
+
+h1 { font-size: 1.7rem; margin: 0 0 4px; }
+h2 { font-size: 1.1rem; margin: 0 0 16px; color: #94a3b8; }
+
+.card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 22px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+}
+
+label { display: block; font-size: 0.85rem; margin: 14px 0 6px; color: #cbd5e1; }
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border: 1px solid #475569;
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 1rem;
+  outline: none;
+}
+
+input:focus { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 9px;
+  background: #38bdf8;
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+button:hover { background: #7dd3fc; }
+button.secundario { background: #475569; color: #e2e8f0; }
+button.secundario:hover { background: #64748b; }
+button.perigo { background: #ef4444; color: #fff; width: auto; margin: 0; padding: 7px 12px; font-size: 0.8rem; }
+button.perigo:hover { background: #f87171; }
+
+.mensagem {
+  display: none;
+  margin-top: 16px;
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 0.9rem;
+}
+
+.mensagem.ok { display: block; background: rgba(34, 197, 94, 0.15); color: #86efac; }
+.mensagem.erro { display: block; background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+
+.topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.topo h1 { margin: 0; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #334155; }
+th { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+td { color: #e2e8f0; }
+.vazio { text-align: center; color: #94a3b8; padding: 24px; }
+
+.tag { display: inline-block; background: #0ea5e9; color: #0f172a; font-weight: 700; border-radius: 999px; padding: 2px 10px; font-size: 0.8rem; }
+
+.rodape { text-align: center; color: #64748b; font-size: 0.85rem; margin-top: 8px; }
+a { color: #38bdf8; }

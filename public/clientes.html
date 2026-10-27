@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Clientes</title>
+  <link rel="stylesheet" href="/estilo.css" />
+</head>
+<body>
+  <main class="container">
+    <div class="topo">
+      <h1>Meus Clientes</h1>
+      <button id="sair" class="secundario" style="width:auto;margin:0;padding:8px 14px" hidden>Sair</button>
+    </div>
+
+    <section id="tela-login" class="card">
+      <h2>Acesso do administrador</h2>
+      <form id="form-admin" novalidate>
+        <label for="admin-senha">Senha do administrador</label>
+        <input id="admin-senha" type="password" autocomplete="current-password" required />
+        <button type="submit">Entrar no painel</button>
+        <div id="aviso-admin" class="mensagem" role="status"></div>
+      </form>
+    </section>
+
+    <section id="tela-lista" class="card" hidden>
+      <h2>Clientes cadastrados: <span id="total" class="tag">0</span></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Cadastro</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="corpo-tabela"></tbody>
+      </table>
+    </section>
+
+    <p class="rodape"><a href="/">Voltar ao cadastro</a></p>
+  </main>
+
+  <script>
+    const telaLogin = document.getElementById("tela-login");
+    const telaLista = document.getElementById("tela-lista");
+    const corpoTabela = document.getElementById("corpo-tabela");
+    const totalEl = document.getElementById("total");
+    const botaoSair = document.getElementById("sair");
+    const avisoAdmin = document.getElementById("aviso-admin");
+
+    const mostrarErro = (texto) => {
+      avisoAdmin.textContent = texto;
+      avisoAdmin.className = "mensagem erro";
+    };
+
+    async function carregarClientes() {
+      const resposta = await fetch("/api/clientes");
+      if (resposta.status === 401) {
+        telaLogin.hidden = false;
+        telaLista.hidden = true;
+        botaoSair.hidden = true;
+        return false;
+      }
+      const dados = await resposta.json();
+      totalEl.textContent = dados.total;
+      corpoTabela.innerHTML = "";
+
+      if (!dados.clientes.length) {
+        corpoTabela.innerHTML = '<tr><td colspan="6" class="vazio">Nenhum cliente cadastrado ainda.</td></tr>';
+      }
+
+      for (const cliente of dados.clientes) {
+        const linha = document.createElement("tr");
+        const data = new Date(cliente.criado_em.replace(" ", "T") + "Z").toLocaleString("pt-BR");
+        linha.innerHTML = `
+          <td>${cliente.id}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>${data}</td>
+          <td><button class="perigo" data-id="${cliente.id}">Excluir</button></td>
+        `;
+        linha.children[1].textContent = cliente.nome;
+        linha.children[2].textContent = cliente.email;
+        linha.children[3].textContent = cliente.telefone;
+        corpoTabela.appendChild(linha);
+      }
+
+      telaLogin.hidden = true;
+      telaLista.hidden = false;
+      botaoSair.hidden = false;
+      return true;
+    }
+
+    document.getElementById("form-admin").addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+      const senha = document.getElementById("admin-senha").value;
+      const resposta = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ senha })
+      });
+      if (!resposta.ok) {
+        const corpo = await resposta.json();
+        return mostrarErro(corpo.erro || "Não foi possível entrar.");
+      }
+      evento.target.reset();
+      avisoAdmin.className = "mensagem";
+      await carregarClientes();
+    });
+
+    corpoTabela.addEventListener("click", async (evento) => {
+      const botao = evento.target.closest("button[data-id]");
+      if (!botao) return;
+      if (!confirm("Excluir este cliente?")) return;
+      const resposta = await fetch("/api/clientes/" + botao.dataset.id, { method: "DELETE" });
+      if (resposta.ok) await carregarClientes();
+    });
+
+    botaoSair.addEventListener("click", async () => {
+      await fetch("/api/admin/logout", { method: "POST" });
+      telaLogin.hidden = false;
+      telaLista.hidden = true;
+      botaoSair.hidden = true;
+    });
+
+    carregarClientes();
+  </script>
+</body>
+</html>
